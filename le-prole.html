@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#fbf3e8">
+<title>Le Prolé · l'app</title>
+<link rel="icon" href="le-prole-logo.jpg">
+<link rel="apple-touch-icon" href="le-prole-logo.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker:wght@400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<!-- Modèle « bar » (bars-nimes/modele/app.html). Données : donnees.json du lieu, fabriqué par modele/fabriquer.py -->
+<style>
+:root{--bg:#fbf3e8;--card:#fffaf2;--line:#ead9c2;--txt:#1d1a17;--mut:#76695b;--a:#e1251b;--a2:#2d7a4b;--aon:#fff;--glow:0 6px 18px #e1251b33;--r:14px;--fd:'Permanent Marker';--fb:'Nunito';--fdw:400;--fdt:none;--fdl:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--txt);font:400 15px/1.45 var(--fb),system-ui,sans-serif}
+body{max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:calc(78px + env(safe-area-inset-bottom));overflow-x:hidden;position:relative;font-synthesis:none}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{display:block;max-width:100%}
+.demo{background:#ffd400;color:#111;font:600 11px/1 var(--fb);text-align:center;padding:7px 10px;letter-spacing:.02em}
+.demo b{font-weight:800}
+
+/* En-tête */
+header{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;padding:10px 16px;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header .lg{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--a);flex:none}
+header .nm{font:var(--fdw) 18px/1 var(--fd);text-transform:var(--fdt);letter-spacing:var(--fdl);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header .st{font-size:11px;color:var(--mut);margin-top:3px;display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:#7a7a7a;flex:none}
+.dot.on{background:#2fd36b;box-shadow:0 0 0 0 #2fd36b88;animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 7px #2fd36b00}100%{box-shadow:0 0 0 0 #2fd36b00}}
+header .bell{margin-left:auto;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:17px;position:relative;flex:none}
+header .bell i{position:absolute;top:6px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--a)}
+
+/* Onglets */
+.tab{display:none;animation:tabin .35s ease}
+.tab.on{display:block}
+@keyframes tabin{from{opacity:0;transform:translateY(8px)}}
+nav.bb{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;z-index:40;display:grid;grid-template-columns:repeat(5,1fr);padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+nav.bb button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;font-size:10.5px;color:var(--mut);border-radius:12px;transition:color .2s}
+nav.bb button span{font-size:20px;line-height:1;transition:transform .25s}
+nav.bb button.on{color:var(--txt)}
+nav.bb button.on span{transform:translateY(-2px) scale(1.12)}
+nav.bb button.on::after{content:"";width:18px;height:3px;border-radius:3px;background:var(--a);margin-top:1px}
+nav.bb .resa span{width:40px;height:40px;margin-top:-18px;border-radius:50%;background:var(--a);color:var(--aon);display:grid;place-items:center;box-shadow:var(--glow);font-size:19px}
+
+/* Blocs */
+.pad{padding:0 16px}
+.sec{margin:26px 0 0}
+.h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:0 16px 12px}
+.h h2,h2.t{font:var(--fdw) 22px/1.05 var(--fd);text-transform:var(--fdt);letter-spacing:var(--fdl)}
+.h a,.h button{font-size:12.5px;color:var(--a);font-weight:600;text-decoration:none;white-space:nowrap}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.mut{color:var(--mut)}
+.sm{font-size:12.5px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:999px;background:var(--a);color:var(--aon);font-weight:700;font-size:14px;text-decoration:none;box-shadow:var(--glow);transition:transform .15s;position:relative;overflow:hidden}
+.btn:active{transform:scale(.97)}
+.btn.g{background:transparent;color:var(--txt);border:1px solid var(--line);box-shadow:none}
+.btn.w{width:100%}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,#ffffff40 50%,transparent 70%);transform:translateX(-120%);animation:shine 4.5s infinite}
+.btn.g::after{display:none}
+@keyframes shine{30%,100%{transform:translateX(120%)}}
+.chip{display:inline-block;font-size:11px;font-weight:600;padding:4px 9px;border-radius:999px;background:color-mix(in srgb,var(--a) 18%,transparent);color:var(--a);white-space:nowrap}
+.ex{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:5px;background:#ffd40026;color:#e6b800;margin-left:6px;vertical-align:middle}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+
+/* Accueil */
+.hero{position:relative;height:430px;overflow:hidden;isolation:isolate}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;animation:kb 22s ease-in-out infinite alternate}
+@keyframes kb{to{transform:scale(1.12) translate(-2%,-2%)}}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#0000 25%,color-mix(in srgb,var(--bg) 70%,transparent) 62%,var(--bg) 100%)}
+.hero .in{position:absolute;left:16px;right:16px;bottom:18px}
+.hero .ty{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--a2);font-weight:700}
+.hero h1{font:var(--fdw) 46px/.95 var(--fd);text-transform:var(--fdt);letter-spacing:var(--fdl);margin:8px 0 10px;text-shadow:0 2px 24px #0008}
+.hero p{color:var(--txt);opacity:.86;font-size:14px;max-width:340px}
+.open{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 13px;border-radius:999px;background:#000a;border:1px solid #ffffff26;font-size:12.5px;font-weight:600;color:#fff;backdrop-filter:blur(8px)}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 16px 0}
+.quick a,.quick button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:var(--r);background:var(--card);border:1px solid var(--line);font-size:11.5px;text-decoration:none;transition:transform .15s}
+.quick a:active,.quick button:active{transform:scale(.95)}
+.quick span{font-size:21px}
+.stories{display:flex;gap:12px;overflow-x:auto;padding:4px 16px 2px;scrollbar-width:none}
+.stories::-webkit-scrollbar{display:none}
+.sto{flex:none;width:70px;text-align:center;font-size:11px}
+.sto .ring{width:70px;height:70px;border-radius:50%;padding:3px;background:conic-gradient(var(--a),var(--a2),var(--a));animation:ringspin 6s linear infinite}
+.sto.seen .ring{background:var(--line);animation:none}
+@keyframes ringspin{to{filter:hue-rotate(40deg)}}
+.sto img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid var(--bg)}
+.sto div:last-child{margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tonight{margin:0 16px;position:relative;overflow:hidden;border-radius:var(--r);border:1px solid var(--line);background:var(--card);display:grid;grid-template-columns:118px 1fr}
+.tonight img{width:118px;height:100%;min-height:150px;object-fit:cover}
+.tonight .tx{padding:14px}
+.tonight .when{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
+.tonight b{display:block;font:var(--fdw) 21px/1.05 var(--fd);text-transform:var(--fdt);letter-spacing:var(--fdl);margin:6px 0}
+.hh{margin:0 16px;padding:16px;border-radius:var(--r);background:linear-gradient(120deg,color-mix(in srgb,var(--a) 85%,#000),color-mix(in srgb,var(--a2) 70%,#000));color:#fff;position:relative;overflow:hidden}
+.hh::before{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:#ffffff1f}
+.hh small{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+.hh b{display:block;font:var(--fdw) 24px/1.1 var(--fd);text-transform:var(--fdt);margin:4px 0}
+.hh .cd{font:700 28px/1 var(--fb);font-variant-numeric:tabular-nums;margin-top:8px;letter-spacing:.02em}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin:0 16px;border-radius:var(--r);overflow:hidden}
+.grid3 button{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--card)}
+.grid3 img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.grid3 button:hover img{transform:scale(1.06)}
+.grid3 .rl{position:absolute;top:6px;right:6px;font-size:13px;filter:drop-shadow(0 1px 2px #000)}
+.about{margin:0 16px}
+.about p{color:var(--mut);margin-top:8px}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.nums div{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center}
+.nums b{display:block;font:var(--fdw) 22px/1 var(--fd);color:var(--a)}
+.nums span{font-size:11px;color:var(--mut)}
+.pulse{margin:0 16px;display:flex;align-items:center;gap:12px}
+.pulse .eq{display:flex;gap:3px;align-items:flex-end;height:26px}
+.pulse .eq i{width:4px;background:var(--a);border-radius:2px;animation:eq 1s ease-in-out infinite}
+.pulse .eq i:nth-child(2){animation-delay:.2s}.pulse .eq i:nth-child(3){animation-delay:.4s}.pulse .eq i:nth-child(4){animation-delay:.1s}
+@keyframes eq{0%,100%{height:6px}50%{height:26px}}
+
+/* Agenda */
+.filters{display:flex;gap:8px;overflow-x:auto;padding:0 16px 4px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{flex:none;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--mut)}
+.filters button.on{background:var(--a);border-color:var(--a);color:var(--aon)}
+.day{margin:18px 16px 8px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.ev{margin:0 16px 10px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;padding:10px;border-radius:var(--r);background:var(--card);border:1px solid var(--line)}
+.ev img{width:72px;height:90px;border-radius:calc(var(--r) - 4px);object-fit:cover}
+.ev b{display:block;font-size:15.5px;line-height:1.2;margin:4px 0 3px}
+.ev .act{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.ev .act button,.ev .act a{font-size:11.5px;font-weight:600;padding:6px 10px;border-radius:999px;border:1px solid var(--line);text-decoration:none}
+.ev .act .go.on{background:var(--a);border-color:var(--a);color:var(--aon)}
+.ev.real{border-color:color-mix(in srgb,var(--a) 55%,var(--line))}
+
+/* Carte */
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 16px 4px;scrollbar-width:none;position:sticky;top:59px;z-index:5;background:var(--bg);padding-top:8px;padding-bottom:8px}
+.cats::-webkit-scrollbar{display:none}
+.cats button{flex:none;padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--mut)}
+.cats button.on{background:var(--txt);color:var(--bg);border-color:var(--txt)}
+.dish{margin:0 16px;padding:13px 0;border-bottom:1px dashed var(--line);display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.dish b{font-weight:600}
+.dish .pr{font:var(--fdw) 17px/1 var(--fd);color:var(--a);white-space:nowrap}
+.dish p{grid-column:1;font-size:12.5px;color:var(--mut)}
+.dish .add{grid-column:2;grid-row:2;justify-self:end;width:30px;height:30px;border-radius:50%;border:1px solid var(--a);color:var(--a);font-size:18px;line-height:1}
+.dish .add.on{background:var(--a);color:var(--aon)}
+.cart{position:fixed;left:50%;transform:translate(-50%,140%);bottom:calc(84px + env(safe-area-inset-bottom));width:calc(100% - 24px);max-width:456px;z-index:35;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--txt);color:var(--bg);box-shadow:0 12px 30px #0007;transition:transform .35s cubic-bezier(.2,1.3,.4,1)}
+.cart.on{transform:translate(-50%,0)}
+.cart b{font-size:14px}
+.cart .btn{margin-left:auto;padding:10px 14px;font-size:13px}
+.vote{margin:0 16px}
+.vote button{display:block;width:100%;text-align:left;padding:11px 12px;margin-top:8px;border-radius:12px;border:1px solid var(--line);position:relative;overflow:hidden;font-size:14px}
+.vote button i{position:absolute;inset:0 auto 0 0;background:color-mix(in srgb,var(--a) 22%,transparent);width:0;transition:width .8s}
+.vote button span{position:relative;display:flex;justify-content:space-between}
+
+/* Réserver */
+.form{margin:0 16px;display:grid;gap:12px}
+.form label{display:grid;gap:6px;font-size:12.5px;color:var(--mut);font-weight:600}
+.form input,.form select,.form textarea{width:100%;padding:12px 13px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--txt);font:inherit;font-size:15px}
+.form textarea{min-height:80px;resize:vertical}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.seg button{padding:11px 6px;border-radius:12px;border:1px solid var(--line);font-size:13px;font-weight:600}
+.seg button.on{border-color:var(--a);background:color-mix(in srgb,var(--a) 16%,transparent);color:var(--txt)}
+.ppl{display:flex;align-items:center;gap:14px}
+.ppl button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);font-size:20px}
+.ppl b{font:var(--fdw) 26px/1 var(--fd);min-width:34px;text-align:center}
+.ok{margin:0 16px;text-align:center;padding:26px 18px}
+.ok .big{font-size:46px}
+
+/* Moi */
+.loyal{margin:0 16px;padding:18px;border-radius:calc(var(--r) + 4px);background:linear-gradient(135deg,var(--card),color-mix(in srgb,var(--a) 22%,var(--card)));border:1px solid var(--line);position:relative;overflow:hidden}
+.loyal::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#ffffff14 50%,transparent 65%);animation:shine 6s infinite}
+.loyal .top{display:flex;justify-content:space-between;align-items:center}
+.loyal .top img{width:34px;height:34px;border-radius:50%}
+.stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:16px 0 12px}
+.stamps i{aspect-ratio:1;border-radius:50%;border:2px dashed var(--line);display:grid;place-items:center;font-style:normal;font-size:18px;color:var(--mut)}
+.stamps i.on{border:2px solid var(--a);background:color-mix(in srgb,var(--a) 22%,transparent);animation:pop .4s cubic-bezier(.2,1.6,.4,1)}
+.stamps i.gift{border-style:solid;border-color:var(--a2)}
+@keyframes pop{from{transform:scale(.3)}}
+.qrbox{display:flex;gap:14px;align-items:center;margin-top:12px}
+.qrbox .qr{width:84px;height:84px;background:#fff;border-radius:10px;padding:5px;flex:none}
+.qrbox .qr svg,.qrbox .qr img{width:100%;height:100%}
+.list a,.list button{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;border-bottom:1px solid var(--line);text-decoration:none;font-size:14.5px;text-align:left}
+.list span:first-child{font-size:19px;width:24px;text-align:center}
+.list em{margin-left:auto;font-style:normal;color:var(--mut)}
+.sw{margin-left:auto;width:42px;height:24px;border-radius:12px;background:var(--line);position:relative;transition:background .2s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw.on{background:var(--a)}.sw.on::after{transform:translateX(18px)}
+.info{margin:0 16px}
+.info .row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.info .row span:first-child{width:24px;text-align:center}
+.hours div{display:flex;justify-content:space-between;padding:5px 0;font-size:13.5px}
+.hours .today{color:var(--a);font-weight:700}
+.map{margin:12px 16px 0;height:170px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.map iframe{width:100%;height:100%;border:0;filter:saturate(.8)}
+.faq details{margin:0 16px;border-bottom:1px solid var(--line);padding:12px 0}
+.faq summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+.faq summary::after{content:"+";color:var(--a);font-size:18px}
+.faq details[open] summary::after{content:"–"}
+.faq p{color:var(--mut);margin-top:6px;font-size:13.5px}
+
+/* Feuilles, visionneuse, notifications */
+.sheet{position:fixed;inset:0;z-index:60;display:none;background:#000b;align-items:flex-end;justify-content:center}
+.sheet.on{display:flex;animation:fade .25s}
+@keyframes fade{from{opacity:0}}
+.sheet .pan{width:100%;max-width:480px;max-height:90vh;overflow:auto;background:var(--bg);border-radius:22px 22px 0 0;padding:18px 0 30px;animation:up .35s cubic-bezier(.2,1,.3,1)}
+@keyframes up{from{transform:translateY(60%)}}
+.sheet .x{position:sticky;top:0;float:right;margin:-6px 12px 0 0;width:34px;height:34px;border-radius:50%;background:var(--card);border:1px solid var(--line);font-size:16px;z-index:2}
+.view{position:fixed;inset:0;z-index:70;background:#000;display:none;flex-direction:column}
+.view.on{display:flex}
+.view .bars{display:flex;gap:4px;padding:10px 10px 0}
+.view .bars i{flex:1;height:3px;background:#ffffff40;border-radius:2px;overflow:hidden}
+.view .bars i b{display:block;height:100%;width:0;background:#fff}
+.view .hd{display:flex;align-items:center;gap:8px;padding:10px;color:#fff;font-size:13px;font-weight:600}
+.view .hd img{width:30px;height:30px;border-radius:50%}
+.view .hd button{margin-left:auto;color:#fff;font-size:22px}
+.view .im{flex:1;position:relative}
+.view .im img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.view .cap{color:#fff;padding:14px 16px 26px;font-size:14px;background:linear-gradient(transparent,#000)}
+.view .nav{position:absolute;inset:0;display:grid;grid-template-columns:1fr 2fr}
+.notif{position:fixed;top:10px;left:50%;transform:translate(-50%,-160%);width:calc(100% - 20px);max-width:460px;z-index:80;display:flex;gap:10px;align-items:center;padding:11px 12px;border-radius:18px;background:#f4f4f6ee;color:#111;backdrop-filter:blur(14px);box-shadow:0 10px 30px #0006;transition:transform .45s cubic-bezier(.2,1.3,.4,1)}
+.notif.on{transform:translate(-50%,0)}
+.notif img{width:38px;height:38px;border-radius:10px;object-fit:cover}
+.notif small{display:block;font-size:11px;color:#666}
+.notif b{font-size:13.5px}
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,30px);opacity:0;z-index:90;background:var(--txt);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13px;font-weight:600;transition:all .35s cubic-bezier(.2,1.4,.4,1);pointer-events:none;max-width:90%;text-align:center}
+.toast.on{transform:translate(-50%,0);opacity:1}
+
+/* Espace gérant */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 16px}
+.kpis div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpis b{display:block;font:var(--fdw) 24px/1 var(--fd);color:var(--a)}
+.kpis span{font-size:11.5px;color:var(--mut)}
+.barsx{display:flex;align-items:flex-end;gap:6px;height:90px;margin:12px 16px 0}
+.barsx div{flex:1;background:color-mix(in srgb,var(--a) 70%,transparent);border-radius:5px 5px 0 0;position:relative;transform-origin:bottom;animation:grow .9s cubic-bezier(.2,1,.3,1) both}
+.barsx div span{position:absolute;bottom:-17px;left:0;right:0;text-align:center;font-size:10px;color:var(--mut)}
+@keyframes grow{from{transform:scaleY(0)}}
+.rq{margin:0 16px 8px;padding:11px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13px;display:flex;gap:10px;align-items:center}
+.rq em{margin-left:auto;font-style:normal;font-size:11px;padding:3px 8px;border-radius:99px;background:#2fd36b22;color:#2fd36b;font-weight:700}
+
+/* Ambiances (champ da.deco) */
+body.d-neon h1,body.d-neon .hh b{text-shadow:0 0 18px color-mix(in srgb,var(--a) 80%,transparent)}
+body.d-neon .hero::before{content:"";position:absolute;inset:-40%;z-index:-1;background:conic-gradient(from 0deg at 50% 0%,transparent 0 40deg,color-mix(in srgb,var(--a) 30%,transparent) 50deg,transparent 60deg 120deg,color-mix(in srgb,var(--a2) 26%,transparent) 130deg,transparent 140deg);animation:beam 9s ease-in-out infinite alternate;mix-blend-mode:screen}
+@keyframes beam{to{transform:rotate(18deg)}}
+body.d-paper{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E")}
+body.d-paper .card,body.d-paper .ev,body.d-paper .tonight{box-shadow:4px 4px 0 var(--line)}
+body.d-paper .chip{border:1.5px solid var(--a);background:transparent;transform:rotate(-2deg)}
+body.d-pirate .card,body.d-pirate .ev,body.d-pirate .tonight{border:1.5px solid color-mix(in srgb,var(--a2) 45%,var(--line));box-shadow:inset 0 0 0 4px var(--card),inset 0 0 0 5px color-mix(in srgb,var(--a2) 22%,transparent)}
+body.d-pirate .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 50% 120%,transparent 40%,#000a 100%)}
+body.d-jazz .h h2::after,body.d-jazz h2.t::after{content:"";display:block;width:46px;height:2px;margin-top:8px;background:linear-gradient(90deg,var(--a),transparent)}
+body.d-jazz .card,body.d-jazz .ev{border-color:color-mix(in srgb,var(--a) 30%,var(--line))}
+body.d-jazz .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(90deg,transparent 0 46px,color-mix(in srgb,var(--a) 10%,transparent) 46px 47px)}
+body.d-street .card,body.d-street .ev,body.d-street .tonight,body.d-street .quick a,body.d-street .quick button{border:2px solid var(--txt);box-shadow:4px 4px 0 var(--txt)}
+body.d-street .btn{box-shadow:3px 3px 0 var(--txt);border:2px solid var(--txt)}
+body.d-brasserie .hero::before{content:"";position:absolute;left:0;right:0;top:0;height:26px;z-index:1;background:repeating-linear-gradient(90deg,var(--a) 0 22px,var(--bg) 22px 44px);-webkit-mask:radial-gradient(circle at 11px 26px,transparent 10px,#000 11px) 0 0/22px 30px;mask:radial-gradient(circle at 11px 26px,transparent 10px,#000 11px) 0 0/22px 30px}
+body.d-brasserie .dish{border-bottom-style:dotted}
+body.d-denim{background-image:repeating-linear-gradient(45deg,#ffffff05 0 2px,transparent 2px 5px),repeating-linear-gradient(-45deg,#00000014 0 2px,transparent 2px 6px)}
+body.d-denim .card,body.d-denim .ev,body.d-denim .tonight,body.d-denim .loyal{outline:1.5px dashed color-mix(in srgb,var(--a2) 75%,transparent);outline-offset:-6px}
+body.d-diy .card,body.d-diy .ev{border-radius:calc(var(--r) + 6px) var(--r) calc(var(--r) + 10px) var(--r)}
+body.d-diy .chip:nth-child(3n){background:color-mix(in srgb,var(--a2) 22%,transparent);color:var(--a2)}
+.hero h1,.hero .ty,.hero p{color:#fff}.hero::after{background:linear-gradient(180deg,#0000 20%,#000a 62%,var(--bg) 100%)}
+body.cap .tab,body.cap .rv{animation:none;opacity:1;transform:none;transition:none}
+@media (min-width:600px){body{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="demo"><b>Démo</b> · maquette non officielle · réalisée par Aziz Bena</div>
+<header>
+  <img class="lg" id="hLogo" alt="">
+  <div style="min-width:0"><div class="nm" id="hName"></div><div class="st"><i class="dot" id="hDot"></i><span id="hOpen"></span></div></div>
+  <button class="bell" id="bell" aria-label="Notifications">🔔<i></i></button>
+</header>
+
+<!-- ACCUEIL -->
+<section class="tab" id="t-home">
+  <div class="hero"><img id="heroImg" alt=""><div class="in">
+    <div class="ty" id="heroType"></div><h1 id="heroName"></h1><p id="heroSlogan"></p>
+    <div class="open"><i class="dot" id="hDot2"></i><span id="hOpen2"></span></div>
+  </div></div>
+  <div class="quick">
+    <a id="qMap" target="_blank" rel="noopener"><span>📍</span>Y aller</a>
+    <a id="qTel"><span>📞</span>Appeler</a>
+    <button data-go="resa"><span>🪑</span>Réserver</button>
+    <a id="qIg" target="_blank" rel="noopener"><span>📸</span>Instagram</a>
+  </div>
+  <div class="sec"><div class="h"><h2>Stories</h2><span class="sm mut">dernières 24 h</span></div><div class="stories" id="stories"></div></div>
+  <div class="sec rv"><div class="h"><h2 id="tonightTitle">Ce soir</h2><button data-go="agenda">Tout l'agenda →</button></div><div id="tonight"></div></div>
+  <div class="sec rv" id="hhWrap"></div>
+  <div class="sec rv"><div class="h"><h2>Le mur</h2><a id="wallIg" target="_blank" rel="noopener">@insta →</a></div><div class="grid3" id="wall"></div></div>
+  <div class="sec rv"><div class="about card"><h2 class="t" id="aboutT"></h2><p id="aboutP"></p><div class="nums" id="nums"></div></div></div>
+  <div class="sec rv"><div class="card pulse"><div class="eq"><i></i><i></i><i></i><i></i></div><div><b>Carte de fidélité</b><div class="sm mut" id="loyalTeaser"></div></div><button class="btn" style="margin-left:auto;padding:9px 14px;font-size:12.5px" data-go="moi">Voir</button></div></div>
+  <div class="sec"></div>
+</section>
+
+<!-- AGENDA -->
+<section class="tab" id="t-agenda">
+  <div class="sec"><div class="h"><h2>Agenda</h2><span class="sm mut">3 prochaines semaines</span></div><div class="filters" id="filters"></div><div id="agenda"></div>
+  <p class="sm mut pad" style="margin-top:14px">★ = date annoncée sur Instagram · les autres soirs = programme habituel du lieu.</p></div>
+</section>
+
+<!-- CARTE -->
+<section class="tab" id="t-carte">
+  <div class="sec"><div class="h"><h2>La carte</h2><span class="sm mut" id="carteNote"></span></div>
+  <div class="card" style="margin:0 16px 12px;display:flex;gap:12px;align-items:center"><span style="font-size:26px">📲</span><div class="sm"><b>Commander depuis sa table</b><br><span class="mut">Ajoutez, envoyez au bar, on vous apporte tout. Plus d'attente au comptoir.</span></div></div>
+  <div class="cats" id="cats"></div><div id="dishes"></div></div>
+  <div class="sec"><div class="h"><h2 id="voteQ">Le cocktail du mois</h2><span class="ex">démo</span></div><div class="vote" id="vote"></div></div>
+  <div class="sec"></div>
+  <div class="cart" id="cart"><span style="font-size:22px">🧾</span><div><b id="cartN"></b><div class="sm" id="cartT"></div></div><button class="btn" id="cartGo">Envoyer au bar</button></div>
+</section>
+
+<!-- RÉSERVER -->
+<section class="tab" id="t-resa">
+  <div class="sec"><div class="h"><h2>Réserver</h2><span class="ex">démo</span></div>
+  <div id="resaForm" class="form">
+    <div class="seg" id="kind"><button class="on" data-k="Table">🪑 Table</button><button data-k="Anniversaire">🎂 Anniv'</button><button data-k="Privatisation">🔑 Privatiser</button></div>
+    <label>Date<input type="date" id="rDate"></label>
+    <label>Heure<select id="rHour"></select></label>
+    <label>Combien ?<div class="ppl"><button type="button" id="pm">−</button><b id="pN">4</b><button type="button" id="pp">+</button><span class="sm mut">personnes</span></div></label>
+    <label>Où ?<div class="seg" id="zone"></div></label>
+    <label>Nom<input id="rName" placeholder="Votre prénom" autocomplete="given-name"></label>
+    <label>Un mot pour l'équipe<textarea id="rMsg" placeholder="Ex. : c'est l'anniversaire de Léa 🎉"></textarea></label>
+    <button class="btn w" id="rSend">Envoyer ma demande</button>
+    <p class="sm mut" style="text-align:center">Démo : rien n'est envoyé. Dans la vraie app, la demande arrive dans l'espace gérant et vous recevez la confirmation par notification.</p>
+  </div>
+  <div id="resaOk"></div></div>
+  <div class="sec" id="privBlock"></div>
+  <div class="sec"></div>
+</section>
+
+<!-- MOI -->
+<section class="tab" id="t-moi">
+  <div class="sec"><div class="h"><h2>Ma carte</h2><span class="ex">démo</span></div>
+  <div class="loyal"><div class="top"><div><div class="sm mut">Carte de fidélité</div><b id="lName"></b></div><img id="lLogo" alt=""></div>
+  <div class="stamps" id="stamps"></div><div class="sm" id="lTxt"></div>
+  <div class="qrbox"><div class="qr" id="qr"></div><div class="sm mut">À montrer au comptoir : un tampon par conso. <button class="chip" id="stampBtn" style="margin-top:8px">+ Simuler un passage au comptoir</button></div></div></div></div>
+  <div class="sec"><div class="h"><h2>Infos pratiques</h2></div>
+  <div class="info" id="info"></div><div class="map" id="map"></div></div>
+  <div class="sec"><div class="h"><h2>Horaires</h2></div><div class="info hours" id="hours"></div></div>
+  <div class="sec faq" id="faq"></div>
+  <div class="sec"><div class="h"><h2>Réglages</h2></div>
+  <div class="list"><button id="swHH"><span>🍹</span>Me prévenir du happy hour<i class="sw on"></i></button>
+  <button id="swEv"><span>🎶</span>Nouvelles soirées et concerts<i class="sw on"></i></button>
+  <button id="swSt"><span>📸</span>Nouvelles stories<i class="sw"></i></button>
+  <button id="openAdmin"><span>🔐</span>Espace gérant<em>démo ›</em></button>
+  <button id="wipe"><span>🗑️</span>Effacer mes données<em>›</em></button></div></div>
+  <p class="sm mut pad" style="margin:22px 0 30px;text-align:center">Démo non officielle réalisée par Aziz Bena. Contenus réels : Instagram et sources publiques (voir notes). Les éléments marqués « démo » sont des exemples.</p>
+</section>
+
+<nav class="bb" id="bb">
+  <button data-go="home" class="on"><span>🏠</span>Accueil</button>
+  <button data-go="agenda"><span>📅</span>Agenda</button>
+  <button data-go="resa" class="resa"><span>🪑</span>Réserver</button>
+  <button data-go="carte"><span>🍸</span>Carte</button>
+  <button data-go="moi"><span>👤</span>Moi</button>
+</nav>
+
+<div class="sheet" id="admin"><div class="pan"><button class="x" data-close>✕</button>
+  <div class="h" style="margin-top:4px"><h2>Espace gérant</h2><span class="ex">chiffres fictifs</span></div>
+  <div class="kpis"><div><b id="k1">0</b><span>clients avec l'app</span></div><div><b id="k2">0</b><span>passages cette semaine</span></div><div><b id="k3">0</b><span>commandes à table</span></div><div><b id="k4">0</b><span>réservations</span></div></div>
+  <div class="sec"><div class="h"><h2 style="font-size:17px">Fréquentation</h2><span class="sm mut">7 derniers jours</span></div><div class="barsx" id="chart"></div></div>
+  <div class="sec" style="margin-top:34px"><div class="h"><h2 style="font-size:17px">Envoyer une notification</h2></div>
+  <div class="form"><select id="nTpl"></select><input id="nTxt"><button class="btn w" id="nSend">Envoyer à tous les clients</button></div></div>
+  <div class="sec"><div class="h"><h2 style="font-size:17px">Publier une story</h2></div><div class="form"><button class="btn g w" id="sSim">Simuler une story Instagram du gérant</button><p class="sm mut">Ce que vous publiez sur Instagram arrive tout seul dans l'app (version officielle).</p></div></div>
+  <div class="sec"><div class="h"><h2 style="font-size:17px">Demandes reçues</h2></div><div id="reqs"></div></div>
+  <div class="sec"><div class="h"><h2 style="font-size:17px">Abonnement</h2></div><div class="card" style="margin:0 16px" id="sub"></div></div>
+</div></div>
+
+<div class="sheet" id="evSheet"><div class="pan"><button class="x" data-close>✕</button><div id="evBody"></div></div></div>
+<div class="view" id="view"><div class="bars" id="vBars"></div><div class="hd"><img id="vLogo" alt=""><span id="vName"></span><span class="mut" id="vAgo" style="font-weight:400;opacity:.7"></span><button id="vX">✕</button></div><div class="im"><img id="vImg" alt=""><div class="nav"><button id="vPrev" aria-label="Précédent"></button><button id="vNext" aria-label="Suivant"></button></div></div><div class="cap" id="vCap"></div></div>
+<div class="notif" id="notif"><img id="nfImg" alt=""><div><small id="nfApp"></small><b id="nfTxt"></b></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const D = {"nom": "Le Prolé", "court": "Le Prolé", "de": "du Prolé", "type": "Bar coopératif et culturel", "slogan": "Bar, café, lieu culturel, institution populaire au cœur de Nîmes depuis 1908.", "accroche": "Une institution populaire <em>depuis 1908</em>", "apropos_titre": "Plus qu'un bar, une âme nîmoise", "apropos": "Rue Jean Reboul, le Prolé accueille depuis plus d'un siècle les rires, les débats et les concerts sous sa cour ombragée. Menu du jour fait maison le midi, et chaque mois un programme des Ami·es du Prolé : concerts, vernissages, café philo, café occitan, rencontres littéraires, apéro bavard.", "chiffres": [["1908", "depuis"], ["700+", "avis Google"], ["3,4 k", "abonnés Instagram"]], "stats_pres": [["1908", "une institution populaire"], ["700+", "avis Google"], ["3,4 k", "abonnés Instagram @prole_nimes"], ["10", "rendez-vous culturels en octobre"]], "source": "Relevé sur Instagram @prole_nimes (programme d'octobre 2026) et leprole-bar-nimes.fr le 21/10/2026.", "instagram": "prole_nimes", "abonnes": "3,4 k", "adresse": "20 rue Jean Reboul, 30000 Nîmes", "site": "https://leprole-bar-nimes.fr/", "horaires": {"0": ["08:00", "01:00"], "1": ["08:00", "01:00"], "2": ["08:00", "01:00"], "3": ["08:00", "01:00"], "4": ["08:00", "01:00"], "5": ["08:00", "01:00"]}, "horaires_note": "Heures indicatives, à confirmer avec le bar.", "hebdo": {"0": ["Le midi au Prolé", "Midi", "12:00", "Menu du jour cuisiné maison, dans la cour ombragée.", "2"], "1": ["Le midi au Prolé", "Midi", "12:00", "Menu du jour cuisiné maison.", "2"], "2": ["Le midi au Prolé", "Midi", "12:00", "Menu du jour cuisiné maison.", "2"], "3": ["Le midi au Prolé", "Midi", "12:00", "Menu du jour cuisiné maison.", "2"], "4": ["Le midi au Prolé", "Midi", "12:00", "Menu du jour cuisiné maison.", "2"]}, "soirees": [{"nom": "Exposition « Coupé-Collé » · Amandine Lamoulie", "date": "2026-10-22", "heure": "10:00", "type": "Expo", "img": "4", "txt": "Poésie de seconde main : l'exposition du mois, jusqu'au 24 octobre.", "url": "https://www.instagram.com/p/DeObLGARMdt/"}, {"nom": "La Dédibox #5 · Tata Yayo & DJ Baroud", "date": "2026-10-27", "heure": "18:30", "type": "Soirée", "img": "4", "txt": "Une chanson, un message, une dédicace. Enregistrée par la Radio Raje.", "url": "https://www.instagram.com/p/DeObLGARMdt/"}], "carte_reelle": true, "carte_note": "Formules du midi : affiche du Prolé. Boissons : exemple.", "carte": [{"cat": "Le midi", "items": [["Plat unique", "Menu du jour, cuisiné maison", "14 €"], ["Tarif étudiant", "Plat unique", "10 €"], ["Entrée-plat ou plat-dessert", "", "17 €"], ["Entrée-plat-dessert", "", "20 €"]]}, {"cat": "Le bar", "items": [["Café", "", "1,60 €"], ["Demi", "Pression", "3 €"], ["Verre de vin", "", "3,50 €"]]}], "vote_q": "Le prochain rendez-vous des Ami·es", "vote": ["Concert rock", "Café philo", "Rencontre littéraire", "Projection-débat"], "zones": ["La cour", "La salle", "Au comptoir"], "privatisation": "Anniversaire, soirée privée, afterwork : un espace du Prolé se réserve ou se privatise.", "fidelite": "Le 10e café offert", "notifs": ["📻 Mardi 18 h 30 : La Dédibox #5 avec Tata Yayo", "🍽️ Le menu du jour est cuisiné", "🎨 Dernier jour de l'expo « Coupé-Collé »"], "faq": [["Le midi ?", "Uniquement un menu du jour cuisiné maison, renouvelé chaque jour. Tarif étudiant à 10 €."], ["Les Ami·es du Prolé ?", "L'association qui organise concerts, expos et débats chaque mois."]], "motscles": ["Bar coopératif", "Lieu culturel", "Depuis 1908", "Cour ombragée", "Concerts", "Café philo"], "hero": "7", "hero_slides": ["7", "9", "10", "8"], "collage": ["7", "2", "10"], "stories": [["Octobre", 3], ["Le midi", 1], ["Concert", 6], ["Expo", 7], ["Feria", 5]], "da_txt": "Le « Prolé » manuscrit et son point rouge, papier peint fleuri, affiches du programme.", "agenda_txt": "Le menu du jour et tout le programme des Ami·es du Prolé.", "da": {"bg": "#fbf3e8", "card": "#fffaf2", "line": "#ead9c2", "txt": "#1d1a17", "mut": "#76695b", "a": "#e1251b", "a2": "#2d7a4b", "aon": "#fff", "glow": "0 6px 18px #e1251b33", "r": "14px", "fd": "Permanent Marker", "fdw": "400", "fdt": "none", "fdl": "0", "fb": "Nunito", "deco": "paper", "css": ".hero h1,.hero .ty,.hero p{color:#fff}.hero::after{background:linear-gradient(180deg,#0000 20%,#000a 62%,var(--bg) 100%)}"}, "posts": [["DY4OTIjgSNa", "Le programme de juin"], ["DTfzqfaCvV_", "Les midis au Prolé : nos formules"], ["DeY4cFORpJO", "Cette semaine au Prolé"], ["DeObLGARMdt", "Les Ami·es du Prolé présentent octobre 2026"], ["DdyIQRzRfq8", "L'heure littéraire"], ["DdRN_umgW0d", "Feria des Vendanges au Prolé"], ["DbK0MXkMwbX", "Concert dans la cour du Prolé"], ["DZapFwlADTX", "Rétrospective de la campagne « Nîmes en commun »"], ["DZNd7wAqZMm", "Apéro littéraire"], ["DYeTZOIA15S", "La Feria au Prolé"], ["DX6qGA5itrr", "Cafés « quand le travail fait souffrir »"], ["DXwuwUmCmKm", "Le programme de mai"]], "lat": 43.83427, "lon": 4.3578, "id": "le-prole", "photos": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]};
+const P = 'le-prole-';
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const store = {get(k, d){try{const v = localStorage.getItem(D.id + ':' + k); return v == null ? d : JSON.parse(v)}catch(e){return d}}, set(k, v){try{localStorage.setItem(D.id + ':' + k, JSON.stringify(v))}catch(e){}}};
+const JOURS = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
+const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pics = D.photos.length ? D.photos : [];
+const img = n => pics.length ? P + (pics.includes(String(n)) ? n : pics[(parseInt(n) || 0) % pics.length]) + '.jpg' : P + 'logo.jpg';
+const wd = d => (d.getDay() + 6) % 7; // 0 = lundi
+const pad2 = n => String(n).padStart(2, '0');
+const iso = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+const toast = t => {const e = $('#toast'); e.textContent = t; e.classList.add('on'); clearTimeout(e._t); e._t = setTimeout(() => e.classList.remove('on'), 2600)};
+document.body.classList.add('d-' + (D.da.deco || 'neon'));
+
+/* ---------- Ouvert / fermé ---------- */
+const mins = h => {const [a, b] = h.split(':').map(Number); return a * 60 + b};
+function status(now = new Date()){
+  const t = now.getHours() * 60 + now.getMinutes(), w = wd(now), H = D.horaires || {};
+  const y = H[(w + 6) % 7];
+  if (y && mins(y[1]) < mins(y[0]) && t < mins(y[1])) return {open: true, txt: 'Ouvert · ferme à ' + y[1].replace(':', 'h')};
+  const h = H[w];
+  if (h){const o = mins(h[0]), c = mins(h[1]); const late = c <= o;
+    if (t >= o && (late || t < c)) return {open: true, txt: 'Ouvert · ferme à ' + h[1].replace(':', 'h')};
+    if (t < o) return {open: false, txt: 'Fermé · ouvre à ' + h[0].replace(':', 'h')};}
+  for (let i = 1; i < 8; i++){const n = H[(w + i) % 7]; if (n) return {open: false, txt: 'Fermé · ouvre ' + (i == 1 ? 'demain' : JOURS[(w + i) % 7]) + ' à ' + n[0].replace(':', 'h')};}
+  return {open: false, txt: D.horaires_txt || 'Horaires sur Instagram'};
+}
+function paintStatus(){const s = status(); for (const [d, t] of [['#hDot', '#hOpen'], ['#hDot2', '#hOpen2']]){$(d).classList.toggle('on', s.open); $(t).textContent = s.txt;}}
+
+/* ---------- En-tête et accueil ---------- */
+$('#hLogo').src = $('#lLogo').src = $('#vLogo').src = $('#nfImg').src = P + 'logo.jpg';
+$('#hName').textContent = $('#lName').textContent = D.nom;
+$('#heroImg').src = img(D.hero || pics[0]);
+$('#heroType').textContent = D.type;
+$('#heroName').textContent = D.court || D.nom;
+$('#heroSlogan').textContent = D.slogan;
+$('#qMap').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(D.nom + ' ' + D.adresse);
+if (D.tel) $('#qTel').href = 'tel:' + D.tel.replace(/\s/g, ''); else $('#qTel').style.display = 'none', $('.quick').style.gridTemplateColumns = 'repeat(3,1fr)';
+const igUrl = D.instagram ? 'https://www.instagram.com/' + D.instagram + '/' : (D.facebook || '#');
+$('#qIg').href = $('#wallIg').href = igUrl;
+if (!D.instagram){$('#qIg').innerHTML = '<span>👍</span>Facebook'; $('#wallIg').textContent = 'Facebook →';}
+else $('#wallIg').textContent = '@' + D.instagram + ' →';
+paintStatus(); setInterval(paintStatus, 60000);
+
+/* Stories (faites avec les photos des posts ; vraies stories dans la version officielle) */
+let STORIES = (D.stories || [['Ce soir', 0], ['Le lieu', 1], ['Au bar', 2], ['Souvenirs', 3], ['Coulisses', 4]]).filter(s => pics.length).map(([t, i], k) => ({t, src: img(pics[i % pics.length]), cap: (D.posts[i] || [])[1] || D.slogan, ago: (k + 1) * 3 + ' h'}));
+function paintStories(){
+  const seen = store.get('seen', []);
+  $('#stories').innerHTML = STORIES.map((s, i) => `<button class="sto ${seen.includes(s.t) ? 'seen' : ''}" data-s="${i}"><div class="ring"><img src="${s.src}" alt=""></div><div>${esc(s.t)}</div></button>`).join('') || '<p class="sm mut">Pas encore de story.</p>';
+  $$('.sto').forEach(b => b.onclick = () => openView(STORIES, +b.dataset.s, true));
+}
+paintStories();
+
+/* Agenda : vraies dates + programme habituel sur 21 jours */
+const today0 = new Date(); today0.setHours(0, 0, 0, 0);
+function agenda(){
+  const out = [], real = new Set();
+  for (const e of D.soirees || []){const d = new Date(e.date + 'T' + (e.heure || '20:00')); if (d >= today0){out.push({...e, d, real: true}); real.add(e.date);}}
+  for (let i = 0; i < 21; i++){
+    const d = new Date(today0); d.setDate(d.getDate() + i);
+    const h = (D.hebdo || {})[wd(d)];
+    if (h && !real.has(iso(d))) out.push({nom: h[0], type: h[1], heure: h[2], txt: h[3] || '', d: new Date(iso(d) + 'T' + h[2]), img: h[4] ?? String((i % Math.max(pics.length, 1)) + 1)});
+  }
+  return out.sort((a, b) => a.d - b.d);
+}
+const AG = agenda();
+const fmtDay = d => {const t = new Date(today0), n = Math.round((new Date(d).setHours(0, 0, 0, 0) - t) / 864e5); return n == 0 ? "Aujourd'hui" : n == 1 ? 'Demain' : JOURS[wd(d)] + ' ' + d.getDate() + ' ' + MOIS[d.getMonth()]};
+function paintTonight(){
+  const e = AG[0];
+  if (!e){$('#tonight').innerHTML = '<div class="card" style="margin:0 16px">Le programme arrive bientôt sur Instagram.</div>'; return}
+  const isToday = iso(e.d) == iso(new Date());
+  $('#tonightTitle').textContent = isToday ? 'Ce soir' : 'Prochain rendez-vous';
+  $('#tonight').innerHTML = `<button class="tonight" style="width:100%;text-align:left" id="tonightBtn"><img src="${img(e.img)}" alt=""><div class="tx"><div class="when">${fmtDay(e.d)} · ${e.heure.replace(':', 'h')}</div><b>${esc(e.nom)}</b><span class="chip">${esc(e.type)}</span><p class="sm mut" style="margin-top:8px">${esc((e.txt || '').slice(0, 90))}</p></div></button>`;
+  $('#tonightBtn').onclick = () => openEv(e);
+}
+paintTonight();
+
+/* Happy hour */
+function paintHH(){
+  const H = D.happy; if (!H){$('#hhWrap').remove(); return}
+  const now = new Date(), w = wd(now), t = now.getHours() * 60 + now.getMinutes(), on = H.jours.includes(w);
+  let lbl, target;
+  if (on && t >= mins(H.de) && t < mins(H.a)){lbl = 'Le happy hour, c\'est maintenant'; target = mins(H.a); }
+  else {lbl = 'Prochain happy hour'; target = null}
+  const cd = () => {
+    const n = new Date(), tt = n.getHours() * 60 + n.getMinutes();
+    if (target != null){const s = (target - tt) * 60 - n.getSeconds(); return 'Encore ' + Math.floor(s / 3600) + 'h ' + pad2(Math.floor(s % 3600 / 60)) + 'min ' + pad2(s % 60) + 's'}
+    for (let i = 0; i < 8; i++){const d = (w + i) % 7; if (H.jours.includes(d) && (i > 0 || tt < mins(H.de))){const s = ((i * 1440 + mins(H.de)) - tt) * 60 - n.getSeconds(); return (i == 0 ? "Aujourd'hui" : i == 1 ? 'Demain' : JOURS[d]) + ' · dans ' + Math.floor(s / 3600) + 'h ' + pad2(Math.floor(s % 3600 / 60)) + 'min'}}
+    return '';
+  };
+  $('#hhWrap').innerHTML = `<div class="hh"><small>🍹 ${lbl}</small><b>${esc(H.txt)}</b><div class="sm" style="opacity:.9">${H.jours.map(j => JOURS[j].slice(0, 3)).join(' · ')} · ${H.de.replace(':', 'h')} → ${H.a.replace(':', 'h')}</div><div class="cd" id="hhCd"></div></div>`;
+  const tick = () => $('#hhCd') && ($('#hhCd').textContent = cd()); tick(); setInterval(tick, 1000);
+}
+paintHH();
+
+/* Le mur (12 derniers posts) */
+$('#wall').innerHTML = D.posts.map((p, i) => pics.includes(String(i + 1)) ? `<button data-w="${i}"><img src="${P}${i + 1}.jpg" alt="" loading="lazy">${p[2] ? '<span class="rl">▶</span>' : ''}</button>` : '').join('');
+const WALL = D.posts.map((p, i) => ({t: p[1].split('·')[0], src: P + (i + 1) + '.jpg', cap: p[1], url: 'https://www.instagram.com/p/' + p[0] + '/'})).filter((p, i) => pics.includes(String(i + 1)));
+$$('#wall button').forEach((b, k) => b.onclick = () => openView(WALL, k, false));
+if (!WALL.length) $('#wall').outerHTML = '<div class="card" style="margin:0 16px" class="sm">Les photos publiées par le lieu s\'afficheront ici automatiquement.</div>';
+$('#aboutT').textContent = D.apropos_titre || 'L\'esprit du lieu';
+$('#aboutP').textContent = D.apropos;
+$('#nums').innerHTML = (D.chiffres || []).map(c => `<div><b>${esc(c[0])}</b><span>${esc(c[1])}</span></div>`).join('');
+$('#loyalTeaser').textContent = D.fidelite || 'Le 10e verre offert';
+
+/* ---------- Agenda ---------- */
+const TYPES = [...new Set(AG.map(e => e.type))];
+let flt = 'Tout';
+function paintAgenda(){
+  $('#filters').innerHTML = ['Tout', ...TYPES].map(t => `<button class="${t == flt ? 'on' : ''}" data-f="${esc(t)}">${esc(t)}</button>`).join('');
+  $$('#filters button').forEach(b => b.onclick = () => {flt = b.dataset.f; paintAgenda()});
+  const going = store.get('going', []);
+  let last = '';
+  $('#agenda').innerHTML = AG.filter(e => flt == 'Tout' || e.type == flt).map((e, i) => {
+    const k = iso(e.d) + e.nom, day = fmtDay(e.d), head = day != last ? `<div class="day">${day}</div>` : ''; last = day;
+    const n = 12 + (k.length * 7) % 40 + (going.includes(k) ? 1 : 0);
+    return head + `<div class="ev ${e.real ? 'real' : ''}"><img src="${img(e.img)}" alt="" loading="lazy"><div><span class="chip">${esc(e.type)}</span> <span class="sm mut">${e.heure.replace(':', 'h')}</span>${e.real ? ' <span class="sm" style="color:var(--a)">★</span>' : ''}<b>${esc(e.nom)}</b><div class="sm mut">${esc((e.txt || '').slice(0, 80))}</div>
+      <div class="act"><button class="go ${going.includes(k) ? 'on' : ''}" data-k="${esc(k)}">${going.includes(k) ? '✓ J\'y vais' : 'J\'y vais'} · ${n}</button><button data-ics="${AG.indexOf(e)}">+ Agenda</button><button data-ev="${AG.indexOf(e)}">Détails</button></div></div></div>`;
+  }).join('');
+  $$('#agenda .go').forEach(b => b.onclick = () => {let g = store.get('going', []); g = g.includes(b.dataset.k) ? g.filter(x => x != b.dataset.k) : [...g, b.dataset.k]; store.set('going', g); paintAgenda(); if (g.includes(b.dataset.k)) toast('Noté ! On vous rappelle le jour J 🔔')});
+  $$('[data-ics]').forEach(b => b.onclick = () => ics(AG[b.dataset.ics]));
+  $$('[data-ev]').forEach(b => b.onclick = () => openEv(AG[b.dataset.ev]));
+}
+paintAgenda();
+function ics(e){
+  const f = d => d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z', end = new Date(+e.d + 3 * 36e5);
+  const s = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//demo//bar//FR', 'BEGIN:VEVENT', 'UID:' + (+e.d) + '@' + D.id, 'DTSTAMP:' + f(new Date()), 'DTSTART:' + f(e.d), 'DTEND:' + f(end), 'SUMMARY:' + e.nom + ' · ' + D.nom, 'LOCATION:' + D.adresse, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([s], {type: 'text/calendar'})); a.download = D.id + '.ics'; a.click(); toast('Ajouté à votre agenda 📅');
+}
+function openEv(e){
+  $('#evBody').innerHTML = `<img src="${img(e.img)}" alt="" style="width:calc(100% - 32px);margin:0 16px;border-radius:var(--r);max-height:420px;object-fit:cover"><div class="pad" style="margin-top:14px"><span class="chip">${esc(e.type)}</span><h2 class="t" style="margin:10px 0 6px">${esc(e.nom)}</h2><div class="mut">${fmtDay(e.d)} · ${e.heure.replace(':', 'h')} · ${esc(D.court || D.nom)}</div><p style="margin-top:12px">${esc(e.txt || 'Programme habituel du lieu : les détails tombent sur Instagram.')}</p>${e.prix ? `<p class="mut sm" style="margin-top:8px">Entrée : ${esc(e.prix)}</p>` : ''}<div style="display:flex;gap:8px;margin-top:16px"><button class="btn" id="evIcs">+ Agenda</button>${e.url ? `<a class="btn g" href="${esc(e.url)}" target="_blank" rel="noopener">Voir le post</a>` : ''}<button class="btn g" data-go="resa" data-close>Réserver</button></div></div>`;
+  $('#evIcs').onclick = () => ics(e);
+  bindGo($('#evBody')); openSheet('#evSheet');
+}
+
+/* ---------- Carte ---------- */
+let cat = 0; const cart = store.get('cart', {});
+$('#carteNote').innerHTML = D.carte_note ? '<span class="ex">' + (D.carte_reelle ? 'prix réels' : 'en partie exemple') + '</span>' : D.carte_reelle ? 'prix relevés en ligne' : '<span class="ex">carte d\'exemple</span>';
+if (D.carte_note) $('#dishes').insertAdjacentHTML('beforebegin', `<p class="sm mut pad" style="margin:-4px 0 6px">${esc(D.carte_note)}</p>`);
+function paintCarte(){
+  $('#cats').innerHTML = D.carte.map((c, i) => `<button class="${i == cat ? 'on' : ''}" data-c="${i}">${esc(c.cat)}</button>`).join('');
+  $$('#cats button').forEach(b => b.onclick = () => {cat = +b.dataset.c; paintCarte()});
+  $('#dishes').innerHTML = D.carte[cat].items.map((d, i) => {const k = cat + '-' + i; return `<div class="dish"><b>${esc(d[0])}</b><span class="pr">${esc(d[2])}</span><p>${esc(d[1])}</p><button class="add ${cart[k] ? 'on' : ''}" data-k="${k}">${cart[k] ? cart[k] : '+'}</button></div>`}).join('');
+  $$('.add').forEach(b => b.onclick = () => {cart[b.dataset.k] = (cart[b.dataset.k] || 0) + 1; store.set('cart', cart); paintCarte()});
+  const n = Object.values(cart).reduce((a, b) => a + b, 0);
+  const tot = Object.entries(cart).reduce((a, [k, q]) => {const [c, i] = k.split('-'); const p = parseFloat(((D.carte[c] || {}).items || [])[i]?.[2]?.replace(',', '.')) || 0; return a + p * q}, 0);
+  $('#cart').classList.toggle('on', n > 0 && $('#t-carte').classList.contains('on'));
+  $('#cartN').textContent = n + ' article' + (n > 1 ? 's' : '');
+  $('#cartT').textContent = tot ? tot.toFixed(2).replace('.', ',') + ' € · table 7 (exemple)' : 'table 7 (exemple)';
+}
+$('#cartGo').onclick = () => {for (const k in cart) delete cart[k]; store.set('cart', cart); paintCarte(); notify('Commande reçue au bar ✓ On vous l\'apporte !'); store.set('orders', store.get('orders', 0) + 1)};
+paintCarte();
+const VOTE = D.vote || ['Spritz maison', 'Mojito', 'Moscow Mule', 'Pornstar Martini'];
+$('#voteQ').textContent = D.vote_q || 'Le cocktail du mois';
+function paintVote(){
+  const my = store.get('vote', null), base = [41, 33, 27, 19];
+  const v = VOTE.map((t, i) => base[i % 4] + (my == i ? 1 : 0)), tot = v.reduce((a, b) => a + b, 0);
+  $('#vote').innerHTML = VOTE.map((t, i) => `<button data-v="${i}"><i style="width:${my != null ? v[i] / tot * 100 : 0}%"></i><span><b>${esc(t)}${my == i ? ' ✓' : ''}</b>${my != null ? Math.round(v[i] / tot * 100) + ' %' : ''}</span></button>`).join('');
+  $$('#vote button').forEach(b => b.onclick = () => {store.set('vote', +b.dataset.v); paintVote()});
+}
+paintVote();
+
+/* ---------- Réserver ---------- */
+let kind = 'Table', ppl = 4, zone = (D.zones || ['Salle', 'Terrasse', 'Au bar'])[0];
+$('#rDate').value = iso(new Date()); $('#rDate').min = iso(new Date());
+$('#rHour').innerHTML = (D.resa_heures || ['18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00']).map(h => `<option>${h}</option>`).join('');
+$('#zone').innerHTML = (D.zones || ['Salle', 'Terrasse', 'Au bar']).map((z, i) => `<button type="button" class="${i ? '' : 'on'}" data-z="${esc(z)}">${esc(z)}</button>`).join('');
+$$('#zone button').forEach(b => b.onclick = () => {zone = b.dataset.z; $$('#zone button').forEach(x => x.classList.toggle('on', x == b))});
+$$('#kind button').forEach(b => b.onclick = () => {kind = b.dataset.k; $$('#kind button').forEach(x => x.classList.toggle('on', x == b)); if (kind == 'Privatisation'){ppl = Math.max(ppl, 20)} $('#pN').textContent = ppl});
+$('#pm').onclick = () => {ppl = Math.max(1, ppl - 1); $('#pN').textContent = ppl};
+$('#pp').onclick = () => {ppl = Math.min(D.capacite || 150, ppl + (ppl >= 20 ? 5 : 1)); $('#pN').textContent = ppl};
+$('#rSend').onclick = () => {
+  const r = {kind, ppl, zone, date: $('#rDate').value, h: $('#rHour').value, name: $('#rName').value.trim() || 'Vous', msg: $('#rMsg').value.trim()};
+  store.set('resas', [...store.get('resas', []), r]);
+  $('#resaForm').style.display = 'none';
+  $('#resaOk').innerHTML = `<div class="card ok"><div class="big">🥂</div><h2 class="t" style="margin:8px 0">C'est envoyé !</h2><p class="mut">${esc(r.kind)} · ${r.ppl} pers. · ${esc(r.zone)}<br>${fmtDay(new Date(r.date + 'T12:00'))} à ${r.h.replace(':', 'h')}</p><p class="sm mut" style="margin-top:10px">Démo : la confirmation arriverait ici par notification.</p><button class="btn g" style="margin-top:14px" id="rAgain">Nouvelle demande</button></div>`;
+  $('#rAgain').onclick = () => {$('#resaOk').innerHTML = ''; $('#resaForm').style.display = ''};
+  setTimeout(() => notify(D.court + ' a confirmé votre réservation ✓'), 2500);
+};
+if (D.privatisation) $('#privBlock').innerHTML = `<div class="h"><h2>Privatiser le lieu</h2></div><div class="card" style="margin:0 16px"><p>${esc(D.privatisation)}</p></div>`;
+
+/* ---------- Moi ---------- */
+function paintLoyal(){
+  const n = store.get('stamps', 3);
+  $('#stamps').innerHTML = Array.from({length: 10}, (_, i) => `<i class="${i < n ? 'on' : ''} ${i == 9 ? 'gift' : ''}">${i < n ? '✓' : i == 9 ? '🎁' : i + 1}</i>`).join('');
+  $('#lTxt').innerHTML = n >= 10 ? '<b>🎉 Récompense débloquée : ' + esc(D.fidelite || 'le 10e verre offert') + '</b>' : `<b>${10 - n} passage${10 - n > 1 ? 's' : ''}</b> avant : ${esc(D.fidelite || 'le 10e verre offert')}`;
+}
+paintLoyal();
+$('#stampBtn').onclick = () => {let n = store.get('stamps', 3); n = n >= 10 ? 0 : n + 1; store.set('stamps', n); paintLoyal(); toast(n ? 'Tampon ajouté ✓' : 'Nouvelle carte !')};
+try {const q = qrcode(0, 'M'); q.addData('DEMO-' + D.id.toUpperCase() + '-4821'); q.make(); $('#qr').innerHTML = q.createSvgTag({margin: 0, scalable: true})} catch(e){$('#qr').textContent = 'QR'}
+$('#info').innerHTML = [['📍', D.adresse], D.tel && ['📞', `<a href="tel:${D.tel.replace(/\s/g, '')}">${esc(D.tel)}</a>`], ['📸', D.instagram ? `<a href="${igUrl}" target="_blank" rel="noopener">@${esc(D.instagram)}</a>${D.abonnes ? ' · ' + esc(D.abonnes) + ' abonnés' : ''}` : `<a href="${igUrl}" target="_blank" rel="noopener">Facebook</a>`], D.site && ['🌐', `<a href="${esc(D.site)}" target="_blank" rel="noopener">${esc(D.site.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</a>`]].filter(Boolean).map(r => `<div class="row"><span>${r[0]}</span><span>${r[0] == '📍' ? esc(r[1]) : r[1]}</span></div>`).join('');
+$('#map').innerHTML = `<iframe loading="lazy" title="Carte" src="https://www.openstreetmap.org/export/embed.html?bbox=${D.lon - .004},${D.lat - .0025},${D.lon + .004},${D.lat + .0025}&layer=mapnik&marker=${D.lat},${D.lon}"></iframe>`;
+$('#hours').innerHTML = JOURS.map((j, i) => {const h = (D.horaires || {})[i]; return `<div class="${i == wd(new Date()) ? 'today' : ''}"><span>${j[0].toUpperCase() + j.slice(1)}</span><span>${h ? h[0].replace(':', 'h') + ' – ' + h[1].replace(':', 'h') : 'Fermé'}</span></div>`}).join('') + (D.horaires_note ? `<p class="sm mut" style="margin-top:6px">${esc(D.horaires_note)}</p>` : '');
+$('#faq').innerHTML = (D.faq || []).length ? '<div class="h"><h2>Questions</h2></div>' + D.faq.map(f => `<details><summary>${esc(f[0])}</summary><p>${esc(f[1])}</p></details>`).join('') : '';
+$$('.list .sw').forEach((s, i) => {const k = 'sw' + i, v = store.get(k, null); if (v != null) s.classList.toggle('on', v); s.parentNode.onclick = () => {s.classList.toggle('on'); store.set(k, s.classList.contains('on')); toast(s.classList.contains('on') ? 'Activé 🔔' : 'Désactivé')}});
+$('#wipe').onclick = () => {try {Object.keys(localStorage).filter(k => k.startsWith(D.id + ':')).forEach(k => localStorage.removeItem(k))} catch(e){} toast('Données effacées'); setTimeout(() => location.reload(), 800)};
+
+/* ---------- Espace gérant (démo) ---------- */
+const G = D.gerant || {app: 640, passages: 412, cmd: 188, resa: 37};
+$('#openAdmin').onclick = () => {
+  openSheet('#admin');
+  [['#k1', G.app], ['#k2', G.passages], ['#k3', G.cmd + store.get('orders', 0)], ['#k4', G.resa + store.get('resas', []).length]].forEach(([s, v]) => {let n = 0; const e = $(s), st = Math.ceil(v / 30); const t = setInterval(() => {n = Math.min(v, n + st); e.textContent = n.toLocaleString('fr-FR'); if (n >= v) clearInterval(t)}, 25)});
+  const days = [...Array(7)].map((_, i) => {const d = new Date(); d.setDate(d.getDate() - 6 + i); return d});
+  const vals = days.map(d => (D.horaires || {})[wd(d)] ? 40 + ((d.getDate() * 37) % 60) : 4);
+  $('#chart').innerHTML = days.map((d, i) => `<div style="height:${vals[i]}%;animation-delay:${i * .07}s"><span>${JOURS[wd(d)].slice(0, 3)}</span></div>`).join('');
+  const rs = store.get('resas', []).map(r => [`${r.name} · ${r.kind} · ${r.ppl} pers.`, `${r.date.slice(8)}/${r.date.slice(5, 7)} ${r.h}`, 'nouveau']);
+  $('#reqs').innerHTML = [...rs.reverse(), ...(D.demandes || [['Camille · Table · 6 pers.', 'ven. 20h30', 'confirmé'], ['Yanis · Anniversaire · 14 pers.', 'sam. 21h', 'à rappeler'], ['Asso. des étudiants · Privatisation · 60 pers.', 'jeu. 19h', 'devis envoyé']])].map(r => `<div class="rq"><span>${r[2] == 'nouveau' ? '🆕' : '📩'}</span><div><b>${esc(r[0])}</b><div class="sm mut">${esc(r[1])}</div></div><em>${esc(r[2])}</em></div>`).join('');
+  $('#sub').innerHTML = `<b>Formule « ${esc(D.formule || 'App + site')} »</b><p class="sm mut" style="margin-top:4px">Mise en place, hébergement, mises à jour et assistance compris. Résiliable chaque mois.</p>`;
+};
+const TPL = D.notifs || ['🍹 Happy hour dans 30 minutes !', '🎶 Ce soir : concert à 21h, venez tôt !', '⚽ Match ce soir sur grand écran', '🍽️ Le plat du jour est en ligne'];
+$('#nTpl').innerHTML = TPL.map(t => `<option>${esc(t)}</option>`).join(''); $('#nTxt').value = TPL[0];
+$('#nTpl').onchange = () => $('#nTxt').value = $('#nTpl').value;
+$('#nSend').onclick = () => {closeSheets(); setTimeout(() => notify($('#nTxt').value), 600)};
+$('#sSim').onclick = () => {closeSheets(); const s = {t: 'Nouveau', src: img(pics[(STORIES.length + 2) % Math.max(pics.length, 1)]), cap: 'Story publiée sur Instagram par le gérant, arrivée dans l\'app.', ago: 'à l\'instant'}; setTimeout(() => {STORIES = [s, ...STORIES]; paintStories(); notify(D.court + ' a publié une story', () => openView(STORIES, 0, true))}, 2500); toast('Story en cours de publication…')};
+
+/* ---------- Visionneuse ---------- */
+let VL = [], vi = 0, vt, vstory;
+function openView(list, i, story){VL = list; vi = i; vstory = story; $('#view').classList.add('on'); showV()}
+function showV(){
+  const s = VL[vi]; if (!s) return closeV();
+  $('#vImg').src = s.src; $('#vName').textContent = D.court || D.nom; $('#vAgo').textContent = s.ago || ''; $('#vCap').textContent = s.cap || '';
+  $('#vBars').innerHTML = vstory ? VL.map((_, k) => `<i><b style="width:${k < vi ? 100 : 0}%"></b></i>`).join('') : '';
+  clearTimeout(vt);
+  if (vstory){const seen = store.get('seen', []); if (!seen.includes(s.t)) store.set('seen', [...seen, s.t]); const b = $$('#vBars b')[vi]; requestAnimationFrame(() => {b.style.transition = 'width 5s linear'; b.style.width = '100%'}); vt = setTimeout(() => {vi++; showV()}, 5000)}
+}
+function closeV(){clearTimeout(vt); $('#view').classList.remove('on'); paintStories()}
+$('#vX').onclick = closeV; $('#vNext').onclick = () => {vi++; showV()}; $('#vPrev').onclick = () => {vi = Math.max(0, vi - 1); showV()};
+
+/* ---------- Navigation, feuilles, notifications ---------- */
+function go(t){
+  if (!$('#t-' + t)) t = 'home';
+  $$('.tab').forEach(s => s.classList.toggle('on', s.id == 't-' + t));
+  $$('#bb button').forEach(b => b.classList.toggle('on', b.dataset.go == t));
+  window.scrollTo(0, 0); paintCarte(); reveal();
+  try {history.replaceState(null, '', '?tab=' + t + (location.search.includes('test') ? '&test' : ''))} catch(e){}
+}
+function bindGo(root){root.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {closeSheets(); go(b.dataset.go)}))}
+bindGo(document);
+function openSheet(s){$(s).classList.add('on')}
+function closeSheets(){$$('.sheet').forEach(s => s.classList.remove('on'))}
+$$('.sheet').forEach(s => s.addEventListener('click', e => {if (e.target == s || e.target.closest('[data-close]')) closeSheets()}));
+function notify(t, cb){const n = $('#notif'); $('#nfApp').textContent = (D.court || D.nom) + ' · maintenant'; $('#nfTxt').textContent = t; n.classList.add('on'); n.onclick = () => {n.classList.remove('on'); cb && cb()}; clearTimeout(n._t); n._t = setTimeout(() => n.classList.remove('on'), 4500)}
+$('#bell').onclick = () => notify((D.notifs || TPL)[0]);
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), {threshold: .12}) : null;
+function reveal(){$$('.rv').forEach(e => io ? io.observe(e) : e.classList.add('in'))}
+const q = new URLSearchParams(location.search);
+go(q.get('tab') || 'home');
+if (q.has('cap')) document.body.classList.add('cap');
+setTimeout(() => {if (!q.has('cap') && !q.has('test') && !store.get('welcomed', false)){store.set('welcomed', true); notify('Bienvenue ! Activez les alertes pour ne rater aucune soirée 🔔')}}, 2200);
+
+/* ---------- Auto-test : ?test ---------- */
+if (q.has('test')){
+  const ok = [AG.length > 0 || !D.hebdo, $$('#dishes .dish').length > 0, $('#stamps').children.length == 10, !!$('#hOpen').textContent, $$('#bb button').length == 5, D.carte.length > 0];
+  ['home', 'agenda', 'carte', 'resa', 'moi'].forEach(go); go('home');
+  console.log(ok.every(Boolean) ? 'selftest ok' : 'selftest FAIL ' + JSON.stringify(ok));
+}
+</script>
+</body>
+</html>
