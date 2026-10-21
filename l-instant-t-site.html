@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f3ece0">
+<title>L'Instant T · Nîmes</title>
+<link rel="icon" href="l-instant-t-logo.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One:wght@400&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<!-- Modèle « site du bar » (bars-nimes/modele/site.html), fabriqué par modele/fabriquer.py -->
+<style>
+:root{--bg:#f3ece0;--card:#fffaf1;--line:#ddd0bb;--txt:#171512;--mut:#6f6656;--a:#d62718;--a2:#1f8a4c;--aon:#fff;--glow:0 6px 18px #d6271833;--r:10px;--fd:'Alfa Slab One';--fb:'Work Sans';--fdw:400;--fdt:uppercase;--fdl:.01em;--w:min(1160px,calc(100vw - 48px))}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px;overflow-x:clip}
+body{background:var(--bg);color:var(--txt);font:400 17px/1.6 var(--fb),system-ui,sans-serif;font-synthesis:none}
+a{color:inherit}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{width:var(--w);margin:0 auto}
+.demo{background:#ffd400;color:#111;font:600 12px/1 var(--fb);text-align:center;padding:7px 10px}
+h1,h2,h3{font-family:var(--fd);font-weight:var(--fdw);text-transform:var(--fdt);letter-spacing:var(--fdl);line-height:1}
+h2{font-size:clamp(34px,5vw,58px)}
+.k{font:700 12px var(--fb);letter-spacing:.28em;text-transform:uppercase;color:var(--a);display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.k::before{content:"";width:26px;height:2px;background:var(--a)}
+.mut{color:var(--mut)}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:999px;background:var(--a);color:var(--aon);font-weight:700;font-size:15px;text-decoration:none;box-shadow:var(--glow);transition:transform .2s,box-shadow .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn.g{background:transparent;color:var(--txt);border:1px solid color-mix(in srgb,var(--txt) 35%,transparent);box-shadow:none}
+.ex{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:5px;background:#ffd40026;color:#e6b800;vertical-align:middle}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+section{padding:110px 0}
+
+/* Navigation */
+nav.top{position:fixed;top:0;left:0;right:0;z-index:30;transition:background .3s,border-color .3s,transform .3s;border-bottom:1px solid transparent}
+nav.top.s{background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:26px;height:68px}
+nav.top .lg{display:flex;align-items:center;gap:10px;text-decoration:none;font:var(--fdw) 20px/1 var(--fd);text-transform:var(--fdt);letter-spacing:var(--fdl)}
+nav.top .lg img{width:38px;height:38px;border-radius:50%;object-fit:cover}
+nav.top .ln{display:flex;gap:24px;margin-left:auto;font-size:14.5px;font-weight:500}
+nav.top .ln a{text-decoration:none;opacity:.8}nav.top .ln a:hover{opacity:1;color:var(--a)}
+nav.top .btn{padding:10px 18px;font-size:14px}
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--a);z-index:31;width:0}
+
+/* Héro */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;padding:0 0 70px;overflow:hidden;isolation:isolate}
+.hero .sl{position:absolute;inset:0;z-index:-2}
+.hero .sl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);transition:opacity 1.6s,transform 7s linear}
+.hero .sl img.on{opacity:1;transform:scale(1)}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 40%,transparent) 0%,transparent 30%,color-mix(in srgb,var(--bg) 75%,transparent) 70%,var(--bg) 100%),linear-gradient(90deg,color-mix(in srgb,var(--bg) 70%,transparent),transparent 70%)}
+.hero .ty{font-size:13px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:var(--a2)}
+.hero h1{font-size:clamp(50px,9vw,128px);margin:14px 0 18px;text-shadow:0 4px 40px #0007}
+.hero h1 span{display:inline-block;opacity:0;transform:translateY(40px) rotate(4deg);animation:let .9s cubic-bezier(.2,1,.3,1) forwards}
+@keyframes let{to{opacity:1;transform:none}}
+.hero p.s{font-size:clamp(18px,2vw,22px);max-width:560px;opacity:.9}
+.hero .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:9px;padding:9px 15px;border-radius:999px;background:#000a;border:1px solid #ffffff22;color:#fff;font-size:14px;font-weight:600;margin-top:26px;backdrop-filter:blur(10px)}
+.dot{width:9px;height:9px;border-radius:50%;background:#888}
+.dot.on{background:#2fd36b;animation:ping 2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 #2fd36b99}70%{box-shadow:0 0 0 9px #2fd36b00}}
+.scroll{position:absolute;right:max(24px,calc(50vw - 580px));bottom:70px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;writing-mode:vertical-rl;opacity:.7}
+.scroll::after{content:"";display:block;width:1px;height:60px;background:currentColor;margin:12px auto 0;animation:sc 2s infinite}
+@keyframes sc{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.mq{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;white-space:nowrap;background:var(--card)}
+.mq div{display:inline-block;animation:mq 38s linear infinite;font:var(--fdw) 28px/1 var(--fd);text-transform:var(--fdt);letter-spacing:var(--fdl)}
+.mq em{font-style:normal;color:var(--a);margin:0 22px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* Semaine */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-top:40px}
+.dayc{border-radius:var(--r);background:var(--card);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,border-color .3s;cursor:pointer;text-align:left}
+.dayc:hover{transform:translateY(-6px);border-color:var(--a)}
+.dayc img{height:150px;width:100%;object-fit:cover}
+.dayc .x{padding:14px}
+.dayc small{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--a)}
+.dayc b{display:block;font-size:16px;line-height:1.2;margin:6px 0}
+.dayc.off{opacity:.45}
+.dayc.today{border-color:var(--a);box-shadow:var(--glow)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px;background:color-mix(in srgb,var(--a) 18%,transparent);color:var(--a)}
+.hhb{margin-top:34px;display:flex;align-items:center;gap:26px;padding:26px 32px;border-radius:calc(var(--r) + 6px);background:linear-gradient(110deg,color-mix(in srgb,var(--a) 88%,#000),color-mix(in srgb,var(--a2) 70%,#000));color:#fff;flex-wrap:wrap}
+.hhb b{font:var(--fdw) 30px/1.05 var(--fd);text-transform:var(--fdt)}
+.hhb .cd{margin-left:auto;font:700 30px var(--fb);font-variant-numeric:tabular-nums}
+
+/* Esprit */
+.spirit{display:grid;grid-template-columns:1.05fr 1fr;gap:70px;align-items:center}
+.spirit p.l{font-size:20px;margin-top:22px;color:var(--mut)}
+.col{position:relative;height:560px}
+.col img{position:absolute;border-radius:var(--r);object-fit:cover;box-shadow:0 30px 60px #0008;transition:transform .6s}
+.col img:nth-child(1){width:62%;height:70%;left:0;top:0;transform:rotate(-3deg)}
+.col img:nth-child(2){width:52%;height:56%;right:0;top:18%;transform:rotate(4deg)}
+.col img:nth-child(3){width:46%;height:42%;left:18%;bottom:0;transform:rotate(-1deg)}
+.col:hover img:nth-child(1){transform:rotate(-5deg) translateX(-10px)}.col:hover img:nth-child(2){transform:rotate(6deg) translateX(10px)}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+.nums div{border-top:2px solid var(--a);padding-top:14px}
+.nums b{display:block;font:var(--fdw) 44px/1 var(--fd);color:var(--txt)}
+.nums span{font-size:14px;color:var(--mut)}
+
+/* Carte */
+.carte{background:var(--card);border-block:1px solid var(--line)}
+.ctabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.ctabs button{padding:10px 18px;border-radius:999px;border:1px solid var(--line);font-weight:600;font-size:14.5px;color:var(--mut);transition:all .2s}
+.ctabs button.on{background:var(--a);border-color:var(--a);color:var(--aon)}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:6px 60px;margin-top:30px}
+.it{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:16px 0;border-bottom:1px dashed var(--line);animation:it .5s both}
+@keyframes it{from{opacity:0;transform:translateY(10px)}}
+.it b{font-size:17px}
+.it .p{font:var(--fdw) 20px/1 var(--fd);color:var(--a)}
+.it p{grid-column:1/-1;font-size:14.5px;color:var(--mut)}
+
+/* Galerie */
+.gal{columns:4 220px;column-gap:12px;margin-top:40px}
+.gal button{display:block;width:100%;margin-bottom:12px;border-radius:var(--r);overflow:hidden;position:relative;break-inside:avoid}
+.gal img{width:100%;transition:transform .6s}
+.gal button:hover img{transform:scale(1.06)}
+.gal button::after{content:"Voir";position:absolute;inset:auto 12px 12px auto;padding:6px 12px;border-radius:99px;background:#000a;color:#fff;font-size:12px;font-weight:700;opacity:0;transition:opacity .3s}
+.gal button:hover::after{opacity:1}
+.lb{position:fixed;inset:0;z-index:60;background:#000e;display:none;align-items:center;justify-content:center;padding:30px;flex-direction:column;gap:16px}
+.lb.on{display:flex}
+.lb img{max-height:78vh;max-width:min(900px,92vw);border-radius:10px}
+.lb p{color:#fff;max-width:700px;text-align:center;font-size:15px}
+.lb .x{position:absolute;top:18px;right:22px;color:#fff;font-size:30px}
+.lb .pv,.lb .nx{position:absolute;top:50%;color:#fff;font-size:40px;padding:10px}
+.lb .pv{left:12px}.lb .nx{right:12px}
+
+/* Privatiser */
+.priv{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.form{display:grid;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:calc(var(--r) + 6px);padding:30px}
+.form .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form label{display:grid;gap:6px;font-size:13px;font-weight:600;color:var(--mut)}
+.form input,.form select,.form textarea{padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);font:inherit;font-size:16px}
+.form textarea{min-height:90px}
+.okm{text-align:center;padding:40px 20px}
+ul.pts{list-style:none;margin-top:26px}
+ul.pts li{padding:12px 0 12px 38px;position:relative;border-bottom:1px solid var(--line)}
+ul.pts li::before{content:"✦";position:absolute;left:6px;color:var(--a)}
+
+/* Infos */
+.infos{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:24px;margin-top:40px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px}
+.box h3{font-size:22px;margin-bottom:14px}
+.hrs div{display:flex;justify-content:space-between;padding:6px 0;font-size:15px;border-bottom:1px solid color-mix(in srgb,var(--line) 60%,transparent)}
+.hrs .t{color:var(--a);font-weight:700}
+.box .r{display:flex;gap:12px;padding:8px 0;font-size:15.5px}
+.mapf{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);min-height:300px}
+.mapf iframe{width:100%;height:100%;min-height:300px;border:0}
+
+/* App */
+.app{display:grid;grid-template-columns:1.1fr auto;gap:70px;align-items:center;background:radial-gradient(800px 400px at 80% 50%,color-mix(in srgb,var(--a) 22%,transparent),transparent 70%)}
+.phone{width:300px;height:620px;border-radius:44px;border:10px solid #111;background:#000;overflow:hidden;box-shadow:0 40px 80px #000a,0 0 0 1px #333;position:relative;animation:fl 6s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-14px)}}
+.phone iframe{width:390px;height:806px;border:0;transform:scale(.7436);transform-origin:0 0}
+.qrw{display:flex;gap:18px;align-items:center;margin-top:30px}
+.qrw .q{width:110px;height:110px;background:#fff;border-radius:14px;padding:8px;flex:none}
+.qrw .q svg{width:100%;height:100%}
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+.feat div{padding:14px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:15px}
+
+footer{border-top:1px solid var(--line);padding:50px 0 120px;font-size:14px;color:var(--mut)}
+footer .wrap{display:flex;gap:30px;flex-wrap:wrap;align-items:center}
+footer .wrap>div:last-child{margin-left:auto}
+.mbar{display:none}
+.hero h1,.hero .ty,.hero p{color:#fff}.hero::after{background:linear-gradient(180deg,#0000 20%,#000a 60%,var(--bg) 100%)}
+
+@media (max-width:900px){
+  section{padding:76px 0}
+  nav.top .ln{display:none}
+  nav.top .btn{margin-left:auto}
+  .week{grid-template-columns:repeat(7,72%);overflow-x:auto;scroll-snap-type:x mandatory;margin-right:-24px;padding-right:24px}
+  .dayc{scroll-snap-align:start}
+  .spirit,.priv,.app,.infos{grid-template-columns:1fr;gap:36px}
+  .col{height:420px}
+  .menu{grid-template-columns:1fr}
+  .phone{margin:0 auto}
+  .scroll{display:none}
+  .hhb .cd{margin-left:0}
+  .form .two{grid-template-columns:1fr}
+  .mbar{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px;position:fixed;left:10px;right:10px;bottom:10px;z-index:40;padding:8px;border-radius:18px;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 10px 30px #0008}
+  .mbar a{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 6px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;background:var(--card)}
+  .mbar a:last-child{background:var(--a);color:var(--aon)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="demo"><b>Démo</b> · maquette non officielle du site, réalisée par Aziz Bena</div>
+<nav class="top" id="nav"><div class="wrap">
+  <a class="lg" href="#top"><img id="nLogo" alt=""><span id="nName"></span></a>
+  <div class="ln"><a href="#semaine">Agenda</a><a href="#esprit">Le lieu</a><a href="#carte">La carte</a><a href="#galerie">Galerie</a><a href="#privatiser">Privatiser</a><a href="#infos">Infos</a></div>
+  <a class="btn" href="#privatiser">Réserver</a>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="sl" id="slides"></div>
+  <div class="wrap">
+    <div class="ty" id="hType"></div>
+    <h1 id="hName"></h1>
+    <p class="s" id="hSlogan"></p>
+    <div class="pill"><i class="dot" id="oDot"></i><span id="oTxt"></span></div>
+    <div class="cta"><a class="btn" href="#privatiser">Réserver une table</a><a class="btn g" href="#semaine">Voir l'agenda</a></div>
+  </div>
+  <div class="scroll">Défiler</div>
+</header>
+<div class="mq"><div id="mq"></div></div>
+
+<section id="semaine"><div class="wrap">
+  <div class="k">Cette semaine</div><h2 class="rv">Le programme</h2>
+  <p class="mut rv" style="margin-top:14px;max-width:640px" id="wNote"></p>
+  <div class="week" id="week"></div>
+  <div id="hh"></div>
+</div></section>
+
+<section id="esprit" style="padding-top:20px"><div class="wrap spirit">
+  <div><div class="k">Le lieu</div><h2 class="rv" id="sT"></h2><p class="l rv" id="sP"></p><div class="nums rv" id="nums"></div></div>
+  <div class="col rv" id="col"></div>
+</div></section>
+
+<section class="carte" id="carte"><div class="wrap">
+  <div class="k">La carte</div><h2 class="rv">À boire, à grignoter</h2>
+  <p class="mut" style="margin-top:12px" id="cNote"></p>
+  <div class="ctabs" id="ctabs"></div><div class="menu" id="menu"></div>
+</div></section>
+
+<section id="galerie"><div class="wrap">
+  <div class="k">Sur Instagram</div><h2 class="rv">Ça se passe ici</h2>
+  <p class="mut" style="margin-top:12px" id="gNote"></p>
+  <div class="gal" id="gal"></div>
+</div></section>
+
+<section id="privatiser" style="padding-top:20px"><div class="wrap priv">
+  <div><div class="k">Réserver & privatiser</div><h2 class="rv">Votre soirée, chez nous</h2>
+  <p class="mut rv" style="margin-top:18px;font-size:19px" id="pTxt"></p>
+  <ul class="pts rv"><li>Table pour un apéro entre amis</li><li>Anniversaire, pot de départ, afterwork</li><li>Privatisation partielle ou totale du lieu</li><li>Réponse rapide de l'équipe</li></ul></div>
+  <div id="pForm"><form class="form" id="form"><h3 style="font-size:26px">Demande de réservation <span class="ex">démo</span></h3>
+    <div class="two"><label>Prénom<input required id="fN" autocomplete="given-name"></label><label>Téléphone<input id="fT" type="tel" autocomplete="tel"></label></div>
+    <div class="two"><label>Date<input type="date" required id="fD"></label><label>Personnes<input type="number" min="1" max="200" value="6" id="fP"></label></div>
+    <label>Type<select id="fK"><option>Table</option><option>Anniversaire</option><option>Afterwork / pot</option><option>Privatisation</option></select></label>
+    <label>Message<textarea id="fM" placeholder="Dites-nous tout…"></textarea></label>
+    <button class="btn" type="submit" style="justify-content:center">Envoyer la demande</button>
+    <p style="font-size:12.5px" class="mut">Démo : rien n'est envoyé.</p></form></div>
+</div></section>
+
+<section id="infos" style="padding-top:20px"><div class="wrap">
+  <div class="k">Infos pratiques</div><h2 class="rv">Venir nous voir</h2>
+  <div class="infos"><div class="box rv"><h3>Horaires</h3><div class="hrs" id="hrs"></div></div><div class="box rv"><h3>Contact</h3><div id="ct"></div></div><div class="mapf rv" id="map"></div></div>
+</div></section>
+
+<section class="app" id="app"><div class="wrap app" style="background:none">
+  <div><div class="k">L'app</div><h2 class="rv" id="aT"></h2><p class="mut rv" style="margin-top:16px;font-size:19px">Le programme, la carte, les réservations et la carte de fidélité dans la poche. Les alertes « happy hour » et « ce soir » arrivent directement sur le téléphone.</p>
+  <div class="feat rv"><div>📅 L'agenda en direct</div><div>🍹 Alerte happy hour</div><div>📲 Commande à table</div><div>🎁 <span id="aF"></span></div></div>
+  <div class="qrw rv"><div class="q" id="qr"></div><div><b>Scannez pour ouvrir l'app</b><p class="mut" style="font-size:14px">Sans téléchargement : elle s'ajoute à l'écran d'accueil.</p><a class="btn g" href="l-instant-t.html" style="margin-top:10px;padding:10px 18px;font-size:14px">Ouvrir l'app →</a></div></div></div>
+  <div class="phone rv"><iframe src="l-instant-t.html?cap" title="Aperçu de l'app" loading="lazy"></iframe></div>
+</div></section>
+
+<footer><div class="wrap"><div style="display:flex;align-items:center;gap:12px"><img id="fLogo" alt="" style="width:44px;height:44px;border-radius:50%"><div><b id="fName" style="color:var(--txt)"></b><div id="fAdr"></div></div></div><div id="fSoc"></div><div>Démo non officielle · réalisée par Aziz Bena</div></div></footer>
+<div class="mbar"><a id="mTel">📞 Appeler</a><a id="mMap" target="_blank" rel="noopener">📍 Y aller</a><a href="#privatiser">Réserver</a></div>
+<div class="lb" id="lb"><button class="x" id="lbX">✕</button><button class="pv" id="lbP">‹</button><img id="lbI" alt=""><p id="lbC"></p><a class="btn g" id="lbA" target="_blank" rel="noopener" style="padding:9px 16px;font-size:13px">Voir sur Instagram</a><button class="nx" id="lbN">›</button></div>
+
+<script>
+const D = {"nom": "L'Instant T", "court": "L'Instant T", "de": "de L'Instant T", "type": "Bar à bières · Concerts", "slogan": "Le temps d'une pause : bières craft, tapas, patio, concerts, expos et karaoké de Tata Yayo.", "accroche": "Le temps d'une pause, <em>presque tous les soirs</em>", "apropos_titre": "Le temps d'une pause", "apropos": "Rue Racine, L'Instant T, c'est des dizaines de bières craft, locales et belges, des vins bio, des tapas et un patio. Et surtout une programmation : concerts reggae, jazz ou gipsy, soirées « Move your body », vernissages, karaoké de Tata Yayo, tournoi d'échecs le mardi.", "chiffres": [["914", "posts de concerts et soirées"], ["3 k", "abonnés Instagram"], ["1", "patio"]], "stats_pres": [["3 k", "abonnés Instagram @l_instant_t"], ["914", "posts : une vraie programmation"], ["Mardi", "tournoi d'échecs « L'Instant Mat »"], ["Patio", "bières craft, tapas, concerts"]], "instagram": "l_instant_t", "abonnes": "3 k", "adresse": "2 rue Racine, 30900 Nîmes", "horaires": {"0": ["14:30", "01:00"], "1": ["14:30", "01:00"], "2": ["14:30", "01:00"], "3": ["14:30", "01:00"], "4": ["14:30", "01:00"], "5": ["14:30", "01:00"], "6": ["14:30", "01:00"]}, "horaires_note": "Horaires relevés sur une fiche en ligne : à confirmer avec le bar.", "hebdo": {"1": ["Tournoi d'échecs · L'Instant Mat", "Jeux", "20:00", "Tous les mardis à 20 h, ouvert à tous.", "7"]}, "soirees": [{"nom": "Ras Daddy Germain", "date": "2026-10-23", "heure": "20:30", "type": "Concert", "img": "3", "txt": "Le DJ nîmois revient avec un set reggae roots, shatta, dancehall et dub.", "url": "https://www.instagram.com/p/Dd9luzbt8_4/"}, {"nom": "Zombie Night Fever × Mr BoOx", "date": "2026-10-31", "heure": "20:30", "type": "Soirée à thème", "img": "2", "txt": "Tout l'Instant T est infecté. Dress code : tous contaminés. Le shooter d'acide est offert à chaque infecté.", "url": "https://www.instagram.com/p/Det53cLtpJt/"}, {"nom": "Karaoké de Tata Yayo", "date": "2026-11-07", "heure": "21:00", "type": "Karaoké", "img": "8", "txt": "Le karaoké du 1er samedi du mois. 1 karaoké, 1 dress code, 0 jugement.", "url": "https://www.instagram.com/p/Ddq0NSDgmao/"}], "carte": [{"cat": "Bières", "items": [["Pression craft", "Sélection du moment, 25 cl", "4,50 €"], ["Belge trappiste", "33 cl", "6 €"], ["Pinte locale", "Brasserie gardoise", "7,50 €"]]}, {"cat": "Vins", "items": [["Verre de vin bio", "Rouge, blanc ou rosé", "4,50 €"], ["Bouteille nature", "Sélection du caviste", "24 €"]]}, {"cat": "Tapas", "items": [["Planche mixte", "Charcuterie, fromages", "14 €"], ["Houmous maison", "Pain grillé", "6 €"], ["Frites de polenta", "Sauce maison", "6 €"]]}], "vote_q": "Le prochain concert", "vote": ["Reggae / dub", "Jazz manouche", "Rock", "Afro-cubain"], "zones": ["Patio", "Salle", "Au bar"], "privatisation": "Le patio et la salle se réservent pour les anniversaires, vernissages et soirées d'association.", "fidelite": "La 10e pinte offerte", "notifs": ["🎶 Ce soir 20 h 30 : concert à L'Instant T", "♟️ Mardi 20 h : tournoi d'échecs", "🎤 Samedi : karaoké de Tata Yayo"], "faq": [["Les concerts sont payants ?", "Le programme du mois est publié sur Instagram : la plupart des soirées sont en entrée libre."], ["Le tournoi d'échecs ?", "Tous les mardis à 20 h, tous niveaux."]], "motscles": ["Bar à bières", "Concerts", "Patio", "Tapas", "Expos", "Karaoké"], "hero": "3", "hero_slides": ["3", "9", "6", "8"], "collage": ["9", "6", "12"], "stories": [["Vendredi", 2], ["Octobre", 0], ["Halloween", 1], ["Karaoké", 7], ["Expo", 11]], "da_txt": "Le tampon noir « L'Instant T », papier crème et affiches de concert colorées.", "agenda_txt": "Concerts, vernissages, karaoké et tournoi d'échecs : le mois entier.", "da": {"bg": "#f3ece0", "card": "#fffaf1", "line": "#ddd0bb", "txt": "#171512", "mut": "#6f6656", "a": "#d62718", "a2": "#1f8a4c", "aon": "#fff", "glow": "0 6px 18px #d6271833", "r": "10px", "fd": "Alfa Slab One", "fdw": "400", "fdt": "uppercase", "fdl": ".01em", "fb": "Work Sans", "deco": "paper", "css": ".hero h1,.hero .ty,.hero p{color:#fff}.hero::after{background:linear-gradient(180deg,#0000 20%,#000a 60%,var(--bg) 100%)}"}, "posts": [["DeH-gQqtQY4", "La prog du mois d'octobre", 1], ["Det53cLtpJt", "Samedi 31 octobre : Zombie Night Fever × Mr BoOx", 1], ["Dd9luzbt8_4", "Vendredi 23 octobre : Ras Daddy Germain", 1], ["Dd9bsPRN0nA", "Vendredi 16 octobre : Eko Karaibe", 1], ["Dd9YXKutlcY", "Samedi 10 octobre : vernissage et concert de Mr gé", 1], ["Dd9WMMLti39", "Vendredi 9 octobre : Move your body avec K.Rythme", 1], ["DeE-DEHjQdU", "Tous les mardis 20 h : tournoi d'échecs"], ["Ddq0NSDgmao", "Le karaoké de Tata Yayo is back"], ["Ddo6npIttCi", "Les Gypsies Nîmois by Compas", 1], ["DdOoYyZtt2V", "Feria des Vendanges à L'Instant T", 1], ["Dc6kh0WNl8t", "Move your body, 11 septembre", 1], ["Dc6hhdct4Xy", "Vernissage Florent Lacaze, 11 septembre", 1]], "lat": 43.83733, "lon": 4.35494, "source": "Relevé sur Instagram @l_instant_t et sources publiques le 21/10/2026.", "carte_reelle": false, "id": "l-instant-t", "photos": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]};
+const P = 'l-instant-t-';
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const JOURS = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'], MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const pics = D.photos, img = n => pics.length ? P + (pics.includes(String(n)) ? n : pics[(parseInt(n) || 0) % pics.length]) + '.jpg' : P + 'logo.jpg';
+const wd = d => (d.getDay() + 6) % 7, pad2 = n => String(n).padStart(2, '0'), iso = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+const mins = h => {const [a, b] = h.split(':').map(Number); return a * 60 + b};
+const igUrl = D.instagram ? 'https://www.instagram.com/' + D.instagram + '/' : (D.facebook || '#');
+const mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(D.nom + ' ' + D.adresse);
+document.body.classList.add('d-' + (D.da.deco || 'neon'));
+
+$('#nLogo').src = $('#fLogo').src = P + 'logo.jpg';
+$('#nName').textContent = $('#fName').textContent = D.court;
+$('#hType').textContent = D.type;
+let li0 = 0; $('#hName').innerHTML = D.court.split(' ').map(w => `<b style="white-space:nowrap;font-weight:inherit">${[...w].map(c => `<span style="animation-delay:${.3 + li0++ * .045}s">${esc(c)}</span>`).join('')}</b>`).join(' ');
+$('#hSlogan').textContent = D.slogan;
+const hs = (D.hero_slides || [D.hero || pics[0], ...pics.slice(1, 4)]).filter(Boolean);
+$('#slides').innerHTML = hs.map((n, i) => `<img src="${img(n)}" alt="" class="${i ? '' : 'on'}">`).join('');
+let si = 0; setInterval(() => {const s = $$('#slides img'); if (s.length < 2) return; s[si].classList.remove('on'); si = (si + 1) % s.length; s[si].classList.add('on')}, 5500);
+const mw = D.motscles || [D.type, 'Nîmes', 'Ouvert ce soir'];
+$('#mq').innerHTML = [...mw, ...mw, ...mw, ...mw].map(w => esc(w) + '<em>✦</em>').join('');
+
+/* Ouvert / fermé */
+function status(){
+  const now = new Date(), t = now.getHours() * 60 + now.getMinutes(), w = wd(now), H = D.horaires || {};
+  const y = H[(w + 6) % 7]; if (y && mins(y[1]) < mins(y[0]) && t < mins(y[1])) return [1, 'Ouvert maintenant · jusqu\'à ' + y[1].replace(':', 'h')];
+  const h = H[w]; if (h){const o = mins(h[0]), c = mins(h[1]); if (t >= o && (c <= o || t < c)) return [1, 'Ouvert maintenant · jusqu\'à ' + h[1].replace(':', 'h')]; if (t < o) return [0, 'Ouvre aujourd\'hui à ' + h[0].replace(':', 'h')]}
+  for (let i = 1; i < 8; i++){const n = H[(w + i) % 7]; if (n) return [0, 'Fermé · ouvre ' + (i == 1 ? 'demain' : JOURS[(w + i) % 7]) + ' à ' + n[0].replace(':', 'h')]}
+  return [0, D.horaires_txt || ''];
+}
+const st = status(); $('#oDot').classList.toggle('on', !!st[0]); $('#oTxt').textContent = st[1];
+
+/* Semaine */
+const t0 = new Date(); t0.setHours(0, 0, 0, 0);
+const real = Object.fromEntries((D.soirees || []).map(e => [e.date, e]));
+$('#week').innerHTML = [...Array(7)].map((_, i) => {
+  const d = new Date(t0); d.setDate(d.getDate() + i); const r = real[iso(d)], h = (D.hebdo || {})[wd(d)], open = (D.horaires || {})[wd(d)];
+  const e = r ? {nom: r.nom, type: r.type, heure: r.heure, img: r.img, txt: r.txt} : h ? {nom: h[0], type: h[1], heure: h[2], img: h[4] ?? String(i + 1), txt: h[3]} : null;
+  const lab = i == 0 ? "Aujourd'hui" : i == 1 ? 'Demain' : JOURS[wd(d)] + ' ' + d.getDate();
+  if (!e) return `<div class="dayc ${open ? '' : 'off'}"><div class="x"><small>${lab}</small><b>${open ? 'Ouvert ' + open[0].replace(':', 'h') + ' – ' + open[1].replace(':', 'h') : 'Fermé'}</b><span class="mut" style="font-size:13px">${open ? 'Comptoir, terrasse, bonne humeur.' : 'On se repose !'}</span></div></div>`;
+  return `<button class="dayc ${i ? '' : 'today'}" data-i="${i}"><img src="${img(e.img)}" alt="" loading="lazy"><div class="x"><small>${lab} · ${e.heure.replace(':', 'h')}</small><b>${esc(e.nom)}</b><span class="tag">${esc(e.type)}</span>${r ? ' <span style="color:var(--a)">★</span>' : ''}</div></button>`;
+}).join('');
+$('#wNote').textContent = (D.soirees || []).length ? '★ = date annoncée sur Instagram. Les autres soirs : le programme habituel du lieu.' : 'Le programme habituel du lieu, jour par jour. Les dates spéciales sont annoncées sur Instagram.';
+$$('.dayc[data-i]').forEach(b => b.onclick = () => location.href = 'l-instant-t.html?tab=agenda');
+if (D.happy){
+  const H = D.happy;
+  $('#hh').innerHTML = `<div class="hhb rv"><span style="font-size:40px">🍹</span><div><div style="font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.85">Happy hour</div><b>${esc(H.txt)}</b><div style="opacity:.9">${H.jours.map(j => JOURS[j]).join(', ')} · ${H.de.replace(':', 'h')} → ${H.a.replace(':', 'h')}</div></div><div class="cd" id="cd"></div></div>`;
+  const tick = () => {const n = new Date(), w = wd(n), tt = n.getHours() * 60 + n.getMinutes();
+    if (H.jours.includes(w) && tt >= mins(H.de) && tt < mins(H.a)){const s = (mins(H.a) - tt) * 60 - n.getSeconds(); $('#cd').textContent = 'En cours · ' + Math.floor(s / 3600) + ':' + pad2(Math.floor(s % 3600 / 60)) + ':' + pad2(s % 60); return}
+    for (let i = 0; i < 8; i++){const d = (w + i) % 7; if (H.jours.includes(d) && (i || tt < mins(H.de))){const s = (i * 1440 + mins(H.de) - tt) * 60 - n.getSeconds(); $('#cd').textContent = 'Dans ' + Math.floor(s / 3600) + 'h ' + pad2(Math.floor(s % 3600 / 60)) + ':' + pad2(s % 60); return}}};
+  tick(); setInterval(tick, 1000);
+}
+
+/* Esprit */
+$('#sT').textContent = D.apropos_titre || "L'esprit du lieu";
+$('#sP').textContent = D.apropos;
+$('#nums').innerHTML = (D.chiffres || []).map(c => `<div><b data-n="${esc(c[0])}">${esc(c[0])}</b><span>${esc(c[1])}</span></div>`).join('');
+$('#col').innerHTML = (D.collage || pics.slice(1, 4)).map(n => `<img src="${img(n)}" alt="" loading="lazy">`).join('');
+
+/* Carte */
+let c = 0;
+$('#cNote').innerHTML = D.carte_note ? esc(D.carte_note) : D.carte_reelle ? (D.carte_source || 'Prix relevés en ligne, à vérifier sur place.') : 'Carte d\'exemple pour la démo <span class="ex">à remplacer</span> : le gérant la met à jour lui-même.';
+function carte(){
+  $('#ctabs').innerHTML = D.carte.map((x, i) => `<button class="${i == c ? 'on' : ''}" data-c="${i}">${esc(x.cat)}</button>`).join('');
+  $$('#ctabs button').forEach(b => b.onclick = () => {c = +b.dataset.c; carte()});
+  $('#menu').innerHTML = D.carte[c].items.map((d, i) => `<div class="it" style="animation-delay:${i * .05}s"><b>${esc(d[0])}</b><span class="p">${esc(d[2])}</span><p>${esc(d[1])}</p></div>`).join('');
+}
+carte();
+
+/* Galerie */
+const G = D.posts.map((p, i) => ({src: P + (i + 1) + '.jpg', cap: p[1], url: 'https://www.instagram.com/p/' + p[0] + '/', ok: pics.includes(String(i + 1))})).filter(g => g.ok);
+$('#gal').innerHTML = G.map((g, i) => `<button data-g="${i}"><img src="${g.src}" alt="" loading="lazy"></button>`).join('');
+$('#gNote').innerHTML = G.length ? (D.instagram ? `Les derniers posts de <a href="${igUrl}" target="_blank" rel="noopener">@${esc(D.instagram)}</a>${D.abonnes ? ' · ' + esc(D.abonnes) + ' abonnés' : ''}. Dans la version officielle, ils arrivent ici tout seuls.` : '') : 'Les photos du lieu arriveront ici automatiquement depuis ses réseaux.';
+let li = 0;
+const lb = i => {li = (i + G.length) % G.length; const g = G[li]; $('#lbI').src = g.src; $('#lbC').textContent = g.cap; $('#lbA').href = g.url; $('#lb').classList.add('on')};
+$$('#gal button').forEach(b => b.onclick = () => lb(+b.dataset.g));
+$('#lbX').onclick = () => $('#lb').classList.remove('on'); $('#lbP').onclick = () => lb(li - 1); $('#lbN').onclick = () => lb(li + 1);
+document.addEventListener('keydown', e => {if (!$('#lb').classList.contains('on')) return; if (e.key == 'Escape') $('#lb').classList.remove('on'); if (e.key == 'ArrowRight') lb(li + 1); if (e.key == 'ArrowLeft') lb(li - 1)});
+
+/* Privatiser */
+$('#pTxt').textContent = D.privatisation || 'Un anniversaire, un pot, une soirée d\'entreprise ? Dites-nous ce que vous imaginez, on s\'occupe du reste.';
+$('#fD').min = $('#fD').value = iso(new Date());
+$('#form').onsubmit = e => {e.preventDefault(); $('#pForm').innerHTML = `<div class="form okm"><div style="font-size:54px">🥂</div><h3 style="font-size:30px;margin:10px 0">Merci ${esc($('#fN').value)} !</h3><p class="mut">Demande reçue (démo) : ${esc($('#fK').value)}, ${esc($('#fP').value)} personnes. Dans la vraie version, l'équipe la reçoit tout de suite.</p></div>`};
+
+/* Infos */
+$('#hrs').innerHTML = JOURS.map((j, i) => {const h = (D.horaires || {})[i]; return `<div class="${i == wd(new Date()) ? 't' : ''}"><span>${j[0].toUpperCase() + j.slice(1)}</span><span>${h ? h[0].replace(':', 'h') + ' – ' + h[1].replace(':', 'h') : 'Fermé'}</span></div>`}).join('') + (D.horaires_note ? `<p class="mut" style="font-size:13px;margin-top:10px">${esc(D.horaires_note)}</p>` : '');
+$('#ct').innerHTML = [['📍', `<a href="${mapUrl}" target="_blank" rel="noopener">${esc(D.adresse)}</a>`], D.tel && ['📞', `<a href="tel:${D.tel.replace(/\s/g, '')}">${esc(D.tel)}</a>`], ['📸', `<a href="${igUrl}" target="_blank" rel="noopener">${D.instagram ? '@' + esc(D.instagram) : 'Facebook'}</a>`], D.site && ['🌐', `<a href="${esc(D.site)}" target="_blank" rel="noopener">${esc(D.site.replace(/^https?:\/\//, '').replace(/\/$/, ''))}</a>`]].filter(Boolean).map(r => `<div class="r"><span>${r[0]}</span><span>${r[1]}</span></div>`).join('') + (D.acces ? `<p class="mut" style="font-size:14px;margin-top:10px">${esc(D.acces)}</p>` : '');
+$('#map').innerHTML = `<iframe loading="lazy" title="Plan" src="https://www.openstreetmap.org/export/embed.html?bbox=${D.lon - .005},${D.lat - .003},${D.lon + .005},${D.lat + .003}&layer=mapnik&marker=${D.lat},${D.lon}"></iframe>`;
+$('#mMap').href = mapUrl; if (D.tel) $('#mTel').href = 'tel:' + D.tel.replace(/\s/g, ''); else $('#mTel').remove();
+$('#fAdr').textContent = D.adresse;
+$('#fSoc').innerHTML = `<a href="${igUrl}" target="_blank" rel="noopener">${D.instagram ? 'Instagram' : 'Facebook'}</a>`;
+
+/* App */
+$('#aT').textContent = (D.court) + ', dans votre poche';
+$('#aF').textContent = D.fidelite || 'Le 10e verre offert';
+try {const q = qrcode(0, 'M'); q.addData(location.href.replace(/-site\.html.*$/, '.html')); q.make(); $('#qr').innerHTML = q.createSvgTag({margin: 0, scalable: true})} catch(e){}
+
+/* Défilement */
+const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), {threshold: .15});
+$$('.rv').forEach(e => io.observe(e));
+addEventListener('scroll', () => {$('#nav').classList.toggle('s', scrollY > 40); $('#prog').style.width = scrollY / (document.body.scrollHeight - innerHeight) * 100 + '%'}, {passive: true});
+
+if (new URLSearchParams(location.search).has('test')){
+  const ok = [$$('#week .dayc').length == 7, $$('#menu .it').length > 0, !!$('#oTxt').textContent, $$('#hrs div').length == 7, document.documentElement.scrollWidth <= innerWidth + 1];
+  console.log(ok.every(Boolean) ? 'selftest ok' : 'selftest FAIL ' + JSON.stringify(ok));
+}
+</script>
+</body>
+</html>
